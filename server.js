@@ -44,14 +44,21 @@ async function mutateEmbeddedProjects(mutator) {
 
 app.post('/api/projects/upsert', async (req, res) => {
   try {
-    const { password, project } = req.body || {};
+    const { password, project, keepExistingHtml } = req.body || {};
     if (password !== ADMIN_PASS) return res.status(401).json({ error: 'Senha inválida' });
     if (!project || !project.id) return res.status(400).json({ error: 'Projeto inválido' });
 
     const result = await mutateEmbeddedProjects((list) => {
       const idx = list.findIndex((p) => p.id === project.id);
-      if (idx >= 0) list[idx] = project;
-      else list.push(project);
+      if (idx >= 0) {
+        const merged = { ...list[idx], ...project };
+        if (keepExistingHtml || typeof project.html !== 'string') {
+          merged.html = list[idx].html;
+        }
+        list[idx] = merged;
+      } else {
+        list.push(project);
+      }
       return list;
     });
     return res.json({ ok: true, ...result });
