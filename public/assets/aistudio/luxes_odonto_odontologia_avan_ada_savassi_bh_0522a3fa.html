@@ -1,0 +1,783 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Luxes Odonto · Odontologia Estética & Reabilitação Oral | Savassi, BH</title>
+  <meta name="description" content="Clínica odontológica de alto padrão na Savassi, Belo Horizonte. Lentes de contato dental em cerâmica pura, implantes guiados 3D, clareamento a laser e Invisalign.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg: #F6F5F2;
+      --surface: #FFFFFF;
+      --surface-tint: #ECEAE4;
+      --petrol: #1C1B1A;
+      --petrol-deep: #111112;
+      --gold: #C8A46B;
+      --gold-light: #E2C799;
+      --mint: #10B981;
+      --mint-dark: #059669;
+      --ink: #1C1B1A;
+      --muted: #5F5B56;
+      --line: rgba(28, 27, 26, 0.09);
+      --line-strong: rgba(28, 27, 26, 0.18);
+      --line-dark: rgba(255, 255, 255, 0.11);
+      --ease: cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; }
+    html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--ink);
+      font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+      font-size: 15px;
+      line-height: 1.65;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    h1, h2, h3, h4, .serif {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-weight: 500;
+      margin: 0;
+    }
+
+    p { margin: 0; }
+    a { color: inherit; text-decoration: none; }
+    button, input, select { font-family: inherit; }
+    img { display: block; max-width: 100%; }
+    .tabular { font-variant-numeric: tabular-nums; }
+    .container { width: 90%; max-width: 1200px; margin: 0 auto; }
+
+    /* Buttons */
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center; gap: 0.6rem;
+      min-height: 46px; padding: 0.75rem 1.65rem; border-radius: 2px;
+      font-size: 0.8rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase;
+      white-space: nowrap; flex-shrink: 0; cursor: pointer; border: 1px solid transparent;
+      transition: background-color 0.2s var(--ease), color 0.2s var(--ease), transform 0.2s var(--ease);
+    }
+    .btn-dark { background: var(--petrol); color: #FFFFFF; }
+    .btn-dark:hover { background: var(--gold); color: var(--petrol-deep); transform: translateY(-1px); }
+    .btn-gold { background: var(--gold); color: var(--petrol-deep); }
+    .btn-gold:hover { background: var(--gold-light); transform: translateY(-1px); }
+    .btn-outline { background: transparent; color: var(--petrol); border-color: var(--line-strong); }
+    .btn-outline:hover { border-color: var(--petrol); background: var(--surface); }
+    .btn-outline-light { background: rgba(255, 255, 255, 0.04); color: #FFFFFF; border-color: rgba(198, 166, 114, 0.45); }
+    .btn-outline-light:hover { border-color: var(--gold-light); background: rgba(198, 166, 114, 0.12); }
+    .btn-whatsapp { background: var(--mint); color: #FFFFFF; }
+    .btn-whatsapp:hover { background: var(--mint-dark); transform: translateY(-1px); }
+
+    /* Header */
+    .topbar {
+      position: sticky; top: 0; z-index: 40;
+      background: rgba(17, 17, 18, 0.93);
+      backdrop-filter: blur(18px);
+      border-bottom: 1px solid var(--line-dark);
+    }
+    .topbar-inner { display: flex; align-items: center; justify-content: space-between; gap: 2rem; height: 76px; }
+    .brand { font-family: 'Playfair Display', serif; font-size: 1.5rem; letter-spacing: 0.08em; color: #FFFFFF; }
+    .brand span { color: var(--gold); }
+    .nav { display: none; align-items: center; gap: 2rem; }
+    .nav a { font-size: 0.8rem; font-weight: 500; color: rgba(255, 255, 255, 0.74); transition: color 0.18s; }
+    .nav a:hover { color: var(--gold-light); }
+    .mobile-nav { display: none; background: var(--petrol-deep); border-top: 1px solid var(--line-dark); padding: 1rem 0; }
+    .mobile-nav.open { display: block; }
+    .mobile-nav a { display: block; padding: 0.75rem 0; color: rgba(255,255,255,0.85); border-bottom: 1px solid var(--line-dark); }
+
+    /* Sections */
+    .section { padding: 4.5rem 0; }
+    .section-surface { background: var(--surface); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+    .section-tint { background: var(--surface-tint); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+    .section-dark {
+      background: radial-gradient(circle at 85% 15%, rgba(200, 164, 107, 0.16) 0%, transparent 48%), var(--petrol-deep);
+      color: #FFFFFF; border-top: 1px solid rgba(200, 164, 107, 0.22); border-bottom: 1px solid rgba(200, 164, 107, 0.22);
+    }
+    .kicker {
+      display: inline-flex; align-items: center; gap: 0.75rem;
+      font-size: 0.7rem; font-weight: 600; letter-spacing: 0.22em; text-transform: uppercase; color: var(--gold);
+    }
+    .kicker::before { content: ""; width: 24px; height: 1px; background: var(--gold); }
+    .heading { font-size: clamp(2rem, 3.6vw, 3.05rem); line-height: 1.1; margin-top: 0.75rem; }
+    .heading em { font-style: italic; color: var(--gold-light); }
+    .subcopy { color: var(--muted); font-size: 0.95rem; max-width: 56ch; margin-top: 0.9rem; }
+    .section-dark .subcopy { color: rgba(255, 255, 255, 0.74); }
+
+    /* Frame */
+    .frame { position: relative; overflow: hidden; background: #1C1B1A; border: 1px solid var(--line); }
+    .frame img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+    .frame-fallback {
+      position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
+      font-family: 'Playfair Display', serif; font-size: 1.05rem; color: rgba(255,255,255,0.5); letter-spacing: 0.12em;
+    }
+
+    /* Hero */
+    .hero {
+      padding: 3.25rem 0 4.5rem;
+      background: radial-gradient(circle at 78% 22%, rgba(200, 164, 107, 0.18) 0%, transparent 50%),
+                  linear-gradient(165deg, #111112 0%, #1C1A18 60%, #141312 100%);
+      color: #FFFFFF;
+    }
+    .hero-grid { display: grid; grid-template-columns: 1fr; gap: 2.5rem; align-items: center; }
+    .hero-title { font-size: clamp(2.25rem, 4.2vw, 3.85rem); line-height: 1.08; margin-top: 1rem; color: #FFFFFF; }
+    .hero-title em { font-style: italic; color: var(--gold-light); font-weight: 400; }
+    .hero-actions { display: flex; flex-direction: column; gap: 0.75rem; margin-top: 2rem; }
+    .hero-photo { aspect-ratio: 4 / 5; width: 100%; border: 1px solid rgba(200, 164, 107, 0.38); box-shadow: 0 28px 60px rgba(0, 0, 0, 0.45); }
+    .hero-caption { margin-top: 0.9rem; display: flex; justify-content: space-between; font-size: 0.78rem; color: rgba(255, 255, 255, 0.68); }
+
+    /* Pillars Bar */
+    .pillars-bar { background: #1A1918; border-top: 1px solid rgba(200, 164, 107, 0.24); border-bottom: 1px solid rgba(255, 255, 255, 0.08); padding: 2.25rem 0; }
+    .pillars-grid { display: grid; grid-template-columns: 1fr; gap: 1.5rem; }
+    .pillar-item { display: flex; flex-direction: column; gap: 0.25rem; }
+    .pillar-num { font-family: 'Playfair Display', serif; font-size: 1.15rem; color: var(--gold-light); }
+    .pillar-item strong { font-size: 0.875rem; font-weight: 600; color: #FFFFFF; }
+    .pillar-item span { font-size: 0.8rem; color: rgba(255, 255, 255, 0.62); }
+
+    /* Odontogram & Diagnostics */
+    .diag-grid { display: grid; grid-template-columns: 1fr; gap: 2rem; margin-top: 2.5rem; }
+    .schematic-card { background: var(--petrol-deep); color: #FFFFFF; border: 1px solid rgba(255, 255, 255, 0.08); padding: 1.75rem 1.5rem; }
+    .schematic-head { display: flex; justify-content: space-between; padding-bottom: 1rem; border-bottom: 1px solid rgba(255, 255, 255, 0.08); font-size: 0.72rem; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255, 255, 255, 0.65); }
+    .tooth-node { cursor: pointer; transition: opacity 0.2s; }
+    .tooth-node:hover { opacity: 0.85; }
+    .complaint-list { display: grid; grid-template-columns: 1fr; gap: 0.5rem; }
+    .complaint-row {
+      width: 100%; text-align: left; padding: 0.9rem 1.1rem;
+      background: var(--surface); border: 1px solid var(--line);
+      color: var(--petrol); font-size: 0.875rem; font-weight: 500;
+      display: flex; align-items: center; justify-content: space-between; cursor: pointer;
+      transition: all 0.18s;
+    }
+    .complaint-row:hover { border-color: var(--gold); }
+    .complaint-row.active { background: var(--petrol); border-color: var(--petrol); color: #FFFFFF; }
+    .diag-result-box { background: var(--surface); border: 1px solid var(--line); padding: 1.75rem; }
+    .meta-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 1.25rem; padding-top: 1.25rem; border-top: 1px solid var(--line); font-size: 0.8125rem; }
+    .meta-row span { display: block; font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); }
+    .meta-row strong { display: block; margin-top: 0.2rem; color: var(--petrol); }
+
+    /* Explorer */
+    .explorer-grid { display: grid; grid-template-columns: 1fr; gap: 2rem; margin-top: 2.5rem; }
+    .proto-nav { display: flex; flex-direction: column; border-top: 1px solid var(--line-dark); }
+    .proto-btn {
+      width: 100%; text-align: left; padding: 1.25rem 0.5rem; background: transparent; border: none; border-bottom: 1px solid var(--line-dark);
+      color: rgba(255, 255, 255, 0.62); display: flex; justify-content: space-between; cursor: pointer; transition: 0.18s;
+    }
+    .proto-btn:hover { color: #FFFFFF; }
+    .proto-btn.active { color: #FFFFFF; padding-left: 0.85rem; border-bottom-color: var(--gold); }
+    .proto-btn .num { font-family: 'Playfair Display', serif; font-size: 1rem; color: var(--gold-light); margin-right: 0.75rem; }
+    .proto-btn .name { font-family: 'Playfair Display', serif; font-size: 1.48rem; }
+    .proto-stage { background: var(--surface); color: var(--ink); border: 1px solid rgba(198, 166, 114, 0.28); box-shadow: 0 24px 54px rgba(0,0,0,0.35); }
+    .proto-photo { aspect-ratio: 16 / 9; border-bottom: 1px solid var(--line); }
+    .proto-content { padding: 1.75rem; }
+    .proto-list { margin: 1.15rem 0 0; padding-left: 1.1rem; font-size: 0.875rem; color: var(--muted); display: flex; flex-direction: column; gap: 0.4rem; }
+
+    /* VITA & Timeline */
+    .lab-grid { display: grid; grid-template-columns: 1fr; gap: 2rem; margin-top: 2.5rem; }
+    .vita-tray { background: var(--petrol-deep); color: #FFFFFF; padding: 1.75rem; border: 1px solid rgba(255,255,255,0.08); display: flex; flex-direction: column; justify-content: space-between; gap: 1.5rem; }
+    .ceramic-tabs-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.75rem; padding: 1.25rem 0; border-top: 1px solid rgba(255,255,255,0.08); border-bottom: 1px solid rgba(255,255,255,0.08); }
+    .ceramic-tab { background: transparent; border: 1px solid rgba(255,255,255,0.12); padding: 0.85rem 0.5rem; color: rgba(255,255,255,0.72); display: flex; flex-direction: column; align-items: center; gap: 0.65rem; cursor: pointer; transition: 0.2s; }
+    .ceramic-tab.active { border-color: #D4BC94; background: rgba(255,255,255,0.06); color: #FFFFFF; }
+    .porcelain-sample { width: 34px; height: 48px; border-radius: 6px 6px 14px 14px; border: 1px solid rgba(255,255,255,0.25); }
+    .timeline-box { background: var(--surface); border: 1px solid var(--line); padding: 1.75rem; }
+    .timeline-nav { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 1rem; padding-bottom: 1rem; border-bottom: 1px solid var(--line); }
+    .t-tab { padding: 0.45rem 0.9rem; background: transparent; border: 1px solid var(--line-strong); color: var(--muted); font-size: 0.78rem; cursor: pointer; }
+    .t-tab.active { background: var(--petrol); border-color: var(--petrol); color: #FFFFFF; }
+    .t-steps { margin-top: 1.25rem; display: flex; flex-direction: column; gap: 1rem; }
+    .t-step { display: grid; grid-template-columns: 72px 1fr; gap: 1rem; padding-bottom: 1rem; border-bottom: 1px solid var(--line); }
+
+    /* Founder */
+    .founder-grid { display: grid; grid-template-columns: 1fr; gap: 2.5rem; align-items: center; }
+    .founder-photo { aspect-ratio: 4 / 5; max-width: 380px; width: 100%; margin: 0 auto; }
+    .founder-quote { font-family: 'Playfair Display', serif; font-style: italic; font-size: 1.5rem; line-height: 1.35; color: var(--petrol); margin: 1.5rem 0; padding: 1.25rem 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+
+    /* Reviews & FAQ */
+    .reviews-grid { display: grid; grid-template-columns: 1fr; gap: 1.5rem; margin-top: 2rem; }
+    .review-card { background: rgba(255,255,255,0.04); border: 1px solid rgba(198,166,114,0.22); padding: 1.75rem; display: flex; flex-direction: column; justify-content: space-between; gap: 1.25rem; }
+    .faq-list { margin-top: 2rem; border-top: 1px solid var(--line); }
+    .faq-item { border-bottom: 1px solid var(--line); }
+    .faq-btn { width: 100%; text-align: left; padding: 1.35rem 0; background: transparent; border: none; color: var(--petrol); font-size: 0.98rem; font-weight: 500; display: flex; justify-content: space-between; cursor: pointer; }
+    .faq-body { display: none; padding-bottom: 1.35rem; font-size: 0.9rem; color: var(--muted); }
+    .faq-body.open { display: block; }
+
+    /* Contact & Booking */
+    .contact-grid { display: grid; grid-template-columns: 1fr; gap: 2rem; margin-top: 2.25rem; }
+    .map-card { background: var(--surface); border: 1px solid var(--line); display: flex; flex-direction: column; }
+    .map-viewport { height: 360px; width: 100%; background: #E3EAF3; position: relative; }
+    .map-viewport iframe { width: 100%; height: 360px; border: 0; display: block; }
+    .map-foot { padding: 1.4rem; border-top: 1px solid var(--line); display: flex; flex-direction: column; gap: 0.85rem; }
+    .booking-box { background: var(--surface); border: 1px solid var(--line); padding: 1.75rem; }
+    .field-label { display: block; font-size: 0.7rem; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); margin-bottom: 0.45rem; }
+    .field-input { width: 100%; background: var(--bg); border: 1px solid var(--line-strong); border-radius: 2px; padding: 0.8rem 0.95rem; font-size: 0.9rem; color: var(--petrol); }
+    .slots-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.5rem; }
+    .slot-btn { padding: 0.65rem 0.4rem; border: 1px solid var(--line-strong); background: var(--bg); color: var(--petrol); font-size: 0.8vrem; font-weight: 500; cursor: pointer; }
+    .slot-btn.active { background: var(--petrol); border-color: var(--petrol); color: #FFFFFF; }
+    .booking-result { display: none; margin-top: 1.25rem; padding: 1.15rem; background: var(--surface-tint); border: 1px solid var(--gold); }
+    .booking-result.show { display: block; }
+
+    /* Footer & Concierge */
+    .footer { background: var(--petrol-deep); color: rgba(255, 255, 255, 0.7); padding: 3rem 0; }
+    .footer-top { display: flex; justify-content: space-between; align-items: center; padding-bottom: 1.75rem; border-bottom: 1px solid rgba(255,255,255,0.08); flex-wrap: wrap; gap: 1rem; }
+    .footer-nav { display: flex; gap: 1.75rem; font-size: 0.8125rem; flex-wrap: wrap; }
+    .concierge { position: fixed; bottom: 1.25rem; right: 1.25rem; z-index: 50; display: flex; flex-direction: column; align-items: flex-end; }
+    .concierge-panel { display: none; width: 330px; background: var(--surface); border: 1px solid var(--line-strong); box-shadow: 0 24px 48px rgba(17,24,34,0.18); margin-bottom: 0.75rem; }
+    .concierge-panel.open { display: block; }
+    .concierge-head { background: var(--petrol); color: #FFFFFF; padding: 0.95rem 1.15rem; display: flex; justify-content: space-between; align-items: center; }
+    .concierge-feed { height: 195px; overflow-y: auto; padding: 0.9rem; background: var(--bg); display: flex; flex-direction: column; gap: 0.55rem; font-size: 0.8125rem; }
+    .msg-bot { background: var(--surface); border: 1px solid var(--line); padding: 0.65rem 0.85rem; max-width: 90%; }
+    .msg-user { align-self: flex-end; background: var(--petrol); color: #FFFFFF; padding: 0.6rem 0.85rem; max-width: 85%; }
+    .concierge-foot { padding: 0.8rem; border-top: 1px solid var(--line); display: flex; flex-direction: column; gap: 0.55rem; }
+    .quick-chip { font-size: 0.74rem; padding: 0.3rem 0.6rem; background: var(--surface-tint); border: 1px solid var(--line); cursor: pointer; }
+    .concierge-fab { display: inline-flex; align-items: center; gap: 0.6rem; height: 46px; padding: 0 1.2rem; background: var(--petrol); color: #FFFFFF; font-size: 0.78rem; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; cursor: pointer; }
+
+    @media (min-width: 768px) {
+      .hero-grid { grid-template-columns: 7fr 5fr; gap: 4rem; }
+      .pillars-grid { grid-template-columns: repeat(4, 1fr); }
+      .diag-grid { grid-template-columns: 5.5fr 6.5fr; gap: 2.5rem; }
+      .explorer-grid { grid-template-columns: 5fr 7fr; gap: 3rem; }
+      .lab-grid { grid-template-columns: 6fr 6fr; gap: 2.5rem; }
+      .founder-grid { grid-template-columns: 4.5fr 7.5fr; gap: 4rem; }
+      .reviews-grid { grid-template-columns: repeat(3, 1fr); }
+      .contact-grid { grid-template-columns: 6fr 6fr; gap: 2.5rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="topbar">
+    <div class="container topbar-inner">
+      <a href="#inicio" class="brand">LUXES <span>ODONTO</span></a>
+      <nav class="nav">
+        <a href="#diagnostico">Diagnóstico</a>
+        <a href="#tratamentos">Tratamentos</a>
+        <a href="#laboratorio">Escala VITA</a>
+        <a href="#avaliacoes">Avaliações</a>
+        <a href="#faq">Dúvidas</a>
+      </nav>
+      <div>
+        <a href="#agendamento" class="btn btn-gold" style="min-height:40px;padding:0.5rem 1.25rem;">Agendar</a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section id="inicio" class="hero">
+      <div class="container hero-grid">
+        <div>
+          <span class="kicker">Savassi · Belo Horizonte</span>
+          <h1 class="hero-title">
+            A arte da reabilitação oral e estética do sorriso <em>na Savassi.</em>
+          </h1>
+          <p class="subcopy">
+            Lentes de contato dental em cerâmica pura, implantes guiados por computador e ortodontia invisível planejados com Scanner Intraoral 3D. Precisão biológica, silêncio e naturalidade atemporal.
+          </p>
+          <div class="hero-actions">
+            <a href="#diagnostico" class="btn btn-gold">Diagnóstico do Sorriso</a>
+            <a href="https://wa.me/5531999999999?text=Ol%C3%A1%2C%20Luxes%20Odonto!%20Gostaria%20de%20agendar%20uma%20avalia%C3%A7%C3%A3o%20na%20Savassi." target="_blank" rel="noopener" class="btn btn-outline-light">Agendar via WhatsApp</a>
+          </div>
+        </div>
+        <div>
+          <div class="frame hero-photo">
+            <img src="https://images.unsplash.com/photo-1588776814546-1ffcf47267a5?auto=format&fit=crop&w=900&q=85" alt="Atendimento odontológico de alto padrão na Luxes Odonto Savassi">
+            <div class="frame-fallback">LUXES ODONTO · SAVASSI</div>
+          </div>
+          <div class="hero-caption">
+            <span class="tabular">4,9 ★ · 428 avaliações no Google</span>
+            <span>Rua Pernambuco, 1070</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="pillars-bar">
+      <div class="container pillars-grid">
+        <div class="pillar-item"><span class="pillar-num tabular">01</span><strong>Anestesia Computadorizada</strong><span>Controle digital de fluxo para conforto absoluto.</span></div>
+        <div class="pillar-item"><span class="pillar-num tabular">02</span><strong>Scanner Intraoral 3D</strong><span>Adeus à moldagem tradicional de massinha.</span></div>
+        <div class="pillar-item"><span class="pillar-num tabular">03</span><strong>Tomografia & Estúdio Próprio</strong><span>Exames de imagem na mesma consulta na Savassi.</span></div>
+        <div class="pillar-item"><span class="pillar-num tabular">04</span><strong>Microscopia & Classe B</strong><span>Preparos conservadores e esterilização hospitalar.</span></div>
+      </div>
+    </div>
+
+    <section id="diagnostico" class="section">
+      <div class="container">
+        <span class="kicker">Mapeamento Clínico DSD</span>
+        <h2 class="heading">O que te incomoda <em>no seu sorriso?</em></h2>
+        <p class="subcopy">Selecione a queixa principal ou toque em um dente no esquema digital para visualizar a zona anatômica e o protocolo clínico indicado.</p>
+        
+        <div class="diag-grid">
+          <div class="schematic-card">
+            <div class="schematic-head">
+              <span id="archModeTitle">Incisivos anteriores (12–22)</span>
+              <span>Arcada Superior</span>
+            </div>
+            <svg id="odontogramSvg" viewBox="0 0 420 170" width="100%" style="margin:1.25rem auto;display:block;"></svg>
+            <div style="font-size:0.75rem;color:rgba(255,255,255,0.55);text-align:center;" id="archCaption">Lentes de Contato Dental · Planejamento Digital 3D</div>
+          </div>
+          <div class="diag-right" style="display:flex;flex-direction:column;justify-content:space-between;gap:1.5rem;">
+            <div class="complaint-list" id="complaintGrid"></div>
+            <div class="diag-result-box" id="odontoDetail"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="tratamentos" class="section section-dark">
+      <div class="container">
+        <span class="kicker">Especialidades</span>
+        <h2 class="heading">Protocolos de <em>Reabilitação & Estética</em></h2>
+        <div class="explorer-grid">
+          <div class="proto-nav" id="explorerList"></div>
+          <div class="proto-stage" id="explorerStage"></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="laboratorio" class="section section-tint">
+      <div class="container">
+        <span class="kicker">Laboratório Digital</span>
+        <h2 class="heading">Escala Cerâmica VITA & <em>Cronograma Real</em></h2>
+        <div class="lab-grid">
+          <div class="vita-tray">
+            <div>
+              <span style="font-size:0.7rem;letter-spacing:0.18em;text-transform:uppercase;color:#C9B28A;display:block;">Amostrário Cerâmico</span>
+              <h3 class="serif" id="shadeName" style="font-size:1.85rem;margin-top:0.35rem;color:#FFFFFF;">Claro Natural Harmônico</h3>
+              <p id="shadeDesc" style="font-size:0.85rem;color:rgba(255,255,255,0.75);margin-top:0.5rem;"></p>
+            </div>
+            <div class="ceramic-tabs-row" id="shadeSwatches"></div>
+            <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:0.75rem;">
+              <span id="shadeTag" style="font-size:0.78rem;color:rgba(255,255,255,0.65);">Escala VITA</span>
+              <button type="button" id="shadeApplyBtn" class="btn btn-whatsapp" style="min-height:40px;padding:0.5rem 1.15rem;">Avaliar este tom</button>
+            </div>
+          </div>
+          <div class="timeline-box">
+            <span style="font-size:0.7rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--gold);display:block;">Previsibilidade</span>
+            <h3 class="serif" style="font-size:1.75rem;margin-top:0.3rem;">Etapas por consulta</h3>
+            <div class="timeline-nav" id="timelineTabs"></div>
+            <div class="t-steps" id="timelineSteps"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="responsavel" class="section section-surface">
+      <div class="container founder-grid">
+        <div class="frame founder-photo">
+          <img src="https://images.unsplash.com/photo-1622253692010-333f2da6031d?auto=format&fit=crop&w=900&q=85" alt="Dr. Rafael Mendonça CRO-MG 48.210 Luxes Odonto Savassi" style="object-position:top;">
+          <div class="frame-fallback">DR. RAFAEL MENDONÇA</div>
+        </div>
+        <div>
+          <span class="kicker">Responsável Técnico · CRO-MG 48.210</span>
+          <h2 class="heading" style="margin-top:0.6rem;">Dr. Rafael Mendonça</h2>
+          <p class="subcopy">Mestre em Prótese Dentária pela UFMG, especialista em Reabilitação Oral Adesiva, Implantodontia Digital e Planejamento do Sorriso (DSD).</p>
+          <blockquote class="founder-quote">
+            “Na Luxes Odonto não há rodízio de profissionais. Acompanho pessoalmente do primeiro escaneamento 3D à prova do mockup em boca e ao equilíbrio final da mordida.”
+          </blockquote>
+          <div style="font-size:0.8125rem;color:var(--muted);">+2.400 lentes e coroas entregues · EPAO-MG 5120</div>
+        </div>
+      </div>
+    </section>
+
+    <section id="avaliacoes" class="section section-dark">
+      <div class="container">
+        <div style="display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:1.5rem;padding-bottom:2rem;border-bottom:1px solid var(--line-dark);">
+          <div>
+            <span class="kicker">Google · Savassi</span>
+            <h2 class="heading">Experiências <em>verificadas</em></h2>
+          </div>
+          <div style="display:flex;align-items:baseline;gap:1rem;">
+            <span class="serif tabular" style="font-size:2.9rem;line-height:1;color:var(--gold-light);">4,9</span>
+            <div style="font-size:0.8125rem;color:rgba(255,255,255,0.72);">
+              <div style="color:var(--gold-light);">★★★★★</div>
+              <span class="tabular">428 avaliações no Google</span>
+            </div>
+          </div>
+        </div>
+        <div class="reviews-grid">
+          <article class="review-card">
+            <p style="font-size:0.92rem;color:rgba(255,255,255,0.9);">“Fiz minhas lentes em cerâmica pura com o Dr. Rafael. O escaneamento 3D sem massinha e o mockup testado antes de aprovar fizeram toda diferença.”</p>
+            <div style="font-size:0.78rem;color:rgba(255,255,255,0.62);padding-top:0.85rem;border-top:1px solid var(--line-dark);"><strong style="color:var(--gold-light);">Mariana Alkmim</strong> · Lentes Cerâmicas</div>
+          </article>
+          <article class="review-card">
+            <p style="font-size:0.92rem;color:rgba(255,255,255,0.9);">“Tinha receio de anestesia e adiei um implante por anos. A anestesia computadorizada foi imperceptível e o implante guiado não inchou nada.”</p>
+            <div style="font-size:0.78rem;color:rgba(255,255,255,0.62);padding-top:0.85rem;border-top:1px solid var(--line-dark);"><strong style="color:var(--gold-light);">Eduardo Paiva</strong> · Implante Guiado 3D</div>
+          </article>
+          <article class="review-card">
+            <p style="font-size:0.92rem;color:rgba(255,255,255,0.9);">“Combinei Invisalign e clareamento a laser sem sensibilidade nenhuma. Clínica silenciosa na Savassi com valet na porta e atendimento pontual.”</p>
+            <div style="font-size:0.78rem;color:rgba(255,255,255,0.62);padding-top:0.85rem;border-top:1px solid var(--line-dark);"><strong style="color:var(--gold-light);">Juliana Bretas</strong> · Invisalign & Laser</div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="faq" class="section section-surface">
+      <div class="container" style="max-width:860px;">
+        <span class="kicker">Mitos & Verdades</span>
+        <h2 class="heading">Perguntas Frequentes</h2>
+        <div class="faq-list" id="faqList"></div>
+      </div>
+    </section>
+
+    <section id="agendamento" class="section">
+      <div class="container">
+        <span class="kicker">Savassi · Belo Horizonte</span>
+        <h2 class="heading">Localização & <em>Agendamento Direto</em></h2>
+        <div class="contact-grid">
+          <div class="map-card">
+            <div class="map-viewport">
+              <iframe title="Google Maps — Luxes Odonto Savassi" src="https://www.google.com/maps?q=Rua+Pernambuco,+1070+-+Savassi,+Belo+Horizonte+-+MG&output=embed" width="100%" height="360" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+            </div>
+            <div class="map-foot">
+              <div>
+                <strong style="font-size:0.95rem;display:block;">Rua Pernambuco, 1070 · Conj. 904 – Savassi, BH</strong>
+                <span style="font-size:0.8125rem;color:var(--muted);">Seg a Sex 08h30–19h30 · Sáb até 13h · Valet no local</span>
+              </div>
+              <div style="display:flex;gap:0.65rem;flex-wrap:wrap;">
+                <a href="https://www.google.com/maps/dir/?api=1&destination=Rua+Pernambuco+1070+Savassi+Belo+Horizonte" target="_blank" rel="noopener" class="btn btn-outline" style="min-height:40px;padding:0.5rem 1rem;">Traçar rota</a>
+                <a href="https://wa.me/5531999999999?text=Ol%C3%A1%2C%20Luxes%20Odonto!" target="_blank" rel="noopener" class="btn btn-whatsapp" style="min-height:40px;padding:0.5rem 1rem;">WhatsApp</a>
+              </div>
+            </div>
+          </div>
+          <div class="booking-box">
+            <h3 class="serif" style="font-size:1.8rem;">Reserve sua avaliação</h3>
+            <p style="font-size:0.85rem;color:var(--muted);margin:0.3rem 0 1.25rem;">Com Dr. Rafael Mendonça · Scanner 3D e exames na clínica.</p>
+            <form id="schedulingForm" style="display:flex;flex-direction:column;gap:1rem;">
+              <div>
+                <label for="protocolSelect" class="field-label">Tratamento</label>
+                <select id="protocolSelect" class="field-input">
+                  <option value="Avaliação Digital 3D & Escaneamento">Avaliação Digital 3D & Escaneamento</option>
+                  <option value="Lentes de Contato Dental (Cerâmica Pura)">Lentes de Contato Dental (Cerâmica Pura)</option>
+                  <option value="Implantes Dentários Guiados por Computador">Implantes Dentários Guiados por Computador</option>
+                  <option value="Clareamento a Laser de Alta Performance">Clareamento a Laser de Alta Performance</option>
+                  <option value="Invisalign & Ortodontia Estética Invisível">Invisalign & Ortodontia Estética Invisível</option>
+                </select>
+              </div>
+              <div>
+                <span class="field-label">Data</span>
+                <div class="slots-3" id="dateSlotsGrid"></div>
+              </div>
+              <div>
+                <span class="field-label">Horário</span>
+                <div class="slots-3" id="timeSlotsGrid">
+                  <button type="button" class="slot-btn tabular" data-time="09:00">09:00</button>
+                  <button type="button" class="slot-btn tabular" data-time="10:30">10:30</button>
+                  <button type="button" class="slot-btn tabular active" data-time="14:00">14:00</button>
+                  <button type="button" class="slot-btn tabular" data-time="15:30">15:30</button>
+                  <button type="button" class="slot-btn tabular" data-time="17:00">17:00</button>
+                  <button type="button" class="slot-btn tabular" data-time="18:30">18:30</button>
+                </div>
+              </div>
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.75rem;">
+                <div><label for="patientName" class="field-label">Nome</label><input type="text" id="patientName" required placeholder="Seu nome" class="field-input"></div>
+                <div><label for="patientPhone" class="field-label">WhatsApp</label><input type="tel" id="patientPhone" required placeholder="(31) 99999-9999" class="field-input"></div>
+              </div>
+              <button type="submit" class="btn btn-dark" style="width:100%;">Confirmar pré-agendamento</button>
+            </form>
+            <div id="bookingResult" class="booking-result">
+              <strong id="feedbackTitle" style="display:block;">Solicitação registrada.</strong>
+              <p id="feedbackText" style="font-size:0.84rem;color:var(--muted);margin-top:0.25rem;"></p>
+              <a id="feedbackWaLink" href="#" target="_blank" rel="noopener" class="btn btn-whatsapp" style="margin-top:0.85rem;min-height:40px;">Confirmar no WhatsApp</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-top">
+        <div>
+          <span class="serif" style="font-size:1.5rem;color:#FFFFFF;letter-spacing:0.04em;display:block;">LUXES ODONTO</span>
+          <span style="font-size:0.78rem;color:rgba(255,255,255,0.55);">Rua Pernambuco, 1070 · Savassi, Belo Horizonte</span>
+        </div>
+        <nav class="footer-nav">
+          <a href="#diagnostico">Diagnóstico</a>
+          <a href="#tratamentos">Tratamentos</a>
+          <a href="#laboratorio">Escala VITA</a>
+          <a href="#avaliacoes">Avaliações</a>
+          <a href="#faq">Dúvidas</a>
+          <a href="#agendamento">Agendamento</a>
+        </nav>
+      </div>
+      <div style="padding-top:1.5rem;font-size:0.75rem;color:rgba(255,255,255,0.48);display:flex;justify-content:space-between;flex-wrap:wrap;gap:0.5rem;">
+        <span>© <span id="currentYear">2026</span> Luxes Odonto · Odontologia Avançada.</span>
+        <span>Dr. Rafael Mendonça · CRO-MG 48.210</span>
+      </div>
+    </div>
+  </footer>
+
+  <div class="concierge">
+    <div id="conciergePanel" class="concierge-panel">
+      <div class="concierge-head">
+        <div>
+          <div style="font-size:0.85rem;font-weight:600;">Concierge Clínico</div>
+          <div style="font-size:0.72rem;color:rgba(255,255,255,0.68);">Savassi · Belo Horizonte</div>
+        </div>
+        <button type="button" onclick="toggleConcierge(false)" style="background:none;border:none;color:#FFFFFF;font-size:1.25rem;cursor:pointer;">×</button>
+      </div>
+      <div id="conciergeFeed" class="concierge-feed">
+        <div class="msg-bot">Olá. Posso auxiliar com dúvidas sobre lentes cerâmicas, clareamento sem sensibilidade ou horários na Savassi.</div>
+      </div>
+      <div class="concierge-foot">
+        <div style="display:flex;flex-wrap:wrap;gap:0.35rem;">
+          <button type="button" class="quick-chip" onclick="askConcierge('dor')">Anestesia sem dor</button>
+          <button type="button" class="quick-chip" onclick="askConcierge('scanner')">Scanner 3D</button>
+          <button type="button" class="quick-chip" onclick="askConcierge('urgencia')">Encaixe hoje</button>
+        </div>
+        <div style="display:flex;gap:0.35rem;">
+          <input type="text" id="conciergeInput" placeholder="Sua dúvida..." style="flex:1;background:var(--bg);border:1px solid var(--line-strong);padding:0.45rem 0.7rem;font-size:0.8rem;" onkeydown="if(event.key==='Enter'){event.preventDefault();sendConcierge();}">
+          <button type="button" onclick="sendConcierge()" class="btn btn-dark" style="min-height:36px;padding:0 0.85rem;">→</button>
+        </div>
+      </div>
+    </div>
+    <button type="button" onclick="toggleConcierge()" class="concierge-fab">
+      <span>Concierge</span>
+    </button>
+  </div>
+
+  <script>
+    const WA_NUMBER = '5531999999999';
+
+    const ARCH_TEETH = [
+      { idx: 0, diag: 'bruxismo', cx: 32, cy: 78, w: 28, h: 38, rot: -15, type: 'molar' },
+      { idx: 1, diag: 'lacunas', cx: 64, cy: 66, w: 24, h: 39, rot: -11, type: 'premolar' },
+      { idx: 2, diag: 'mordida', cx: 93, cy: 56, w: 24, h: 42, rot: -8, type: 'premolar' },
+      { idx: 3, diag: 'cor', cx: 123, cy: 49, w: 25, h: 48, rot: -5, type: 'canine' },
+      { idx: 4, diag: 'gengiva', cx: 153, cy: 44, w: 23, h: 45, rot: -3, type: 'lateral' },
+      { idx: 5, diag: 'desgastes', cx: 187, cy: 41, w: 31, h: 52, rot: -1, type: 'central' },
+      { idx: 6, diag: 'desgastes', cx: 223, cy: 41, w: 31, h: 52, rot: 1, type: 'central' },
+      { idx: 7, diag: 'gengiva', cx: 257, cy: 44, w: 23, h: 45, rot: 3, type: 'lateral' },
+      { idx: 8, diag: 'cor', cx: 287, cy: 49, w: 25, h: 48, rot: 5, type: 'canine' },
+      { idx: 9, diag: 'mordida', cx: 317, cy: 56, w: 24, h: 42, rot: 8, type: 'premolar' },
+      { idx: 10, diag: 'lacunas', cx: 346, cy: 66, w: 24, h: 39, rot: 11, type: 'premolar' },
+      { idx: 11, diag: 'bruxismo', cx: 378, cy: 78, w: 28, h: 38, rot: 15, type: 'molar' }
+    ];
+
+    const DIAGNOSTICS = [
+      { id: 'desgastes', complaint: 'Desgastes ou dentes curtos', zoneLabel: 'Incisivos anteriores (12–22)', protocolName: 'Lentes de Contato Dental (Cerâmica Pura)', visits: '2 a 3 consultas', comfort: 'Mockup prévio + microscopia', desc: 'As linhas douradas indicam a restauração da borda incisal com lâminas ultrafinas de dissilicato de lítio.', activeIndices: [4, 5, 6, 7], mode: 'veneer' },
+      { id: 'cor', complaint: 'Cor amarelada ou manchas', zoneLabel: 'Corredor estético completo (15–25)', protocolName: 'Clareamento a Laser de Alta Performance', visits: '1 sessão clínica + reforço', comfort: 'Dessensibilização mineral prévia', desc: 'O clareamento ilumina de forma uniforme os 10 dentes visíveis ao sorrir, preservando a estrutura do esmalte.', activeIndices: [1,2,3,4,5,6,7,8,9,10], mode: 'whiten' },
+      { id: 'lacunas', complaint: 'Falta de dentes ou lacunas', zoneLabel: 'Espaço unitário · Implante Guiado 3D', protocolName: 'Implantes Dentários Guiados por Computador', visits: 'Tomografia + cirurgia guiada 3D', comfort: 'Sem cortes amplos · Carga imediata', desc: 'O implante de titânio é planejado sobre tomografia Cone Beam feita na própria clínica.', activeIndices: [9], mode: 'implant' },
+      { id: 'mordida', complaint: 'Desalinhamento ou mordida', zoneLabel: 'Arcada completa · Alinhador Invisalign', protocolName: 'Invisalign & Ortodontia Estética Invisível', visits: 'Escaneamento iTero em 15 min', comfort: 'Alinhadores transparentes removíveis', desc: 'Alinhadores transparentes atuam simultaneamente em toda a arcada com simulação digital.', activeIndices: [2,3,4,5,6,7,8,9], mode: 'align' },
+      { id: 'gengiva', complaint: 'Sorriso gengival ou retração', zoneLabel: 'Zênite gengival anterior (13–23)', protocolName: 'Plástica Gengival & Periodontia', visits: '1 procedimento + revisão', comfort: 'Microcirurgia minimamente invasiva', desc: 'Redesenho delicado do zênite gengival para harmonizar proporção entre gengiva e coroas.', activeIndices: [3,4,5,6,7,8], mode: 'gum' },
+      { id: 'bruxismo', complaint: 'Bruxismo ou dor ao mastigar', zoneLabel: 'Molares posteriores & oclusão', protocolName: 'Reabilitação Oral & Bruxismo', visits: 'Mapeamento oclusal + placa 3D', comfort: 'Descompressão articular noturna', desc: 'Protege os molares que absorvem a carga mastigatória com placa impressa em 3D.', activeIndices: [0,1,10,11], mode: 'occlusal' }
+    ];
+
+    const PROTOCOLS = [
+      { id: 'lentes', num: '01', tag: 'Estética Dental · Cerâmica Pura', title: 'Lentes de Contato Dental (Cerâmica Pura)', summary: 'Lâminas ultrafinas em porcelana artesanal para corrigir desgastes, espaçamentos e proporção.', image: 'https://images.unsplash.com/photo-1598256989800-fe5f95da9787?auto=format&fit=crop&w=900&q=85', duration: '2 a 3 consultas', tech: 'Scanner 3D + Mockup em boca', points: ['Aprovação do novo sorriso em boca antes do definitivo', 'Porcelana estável que não mancha com café ou vinho'] },
+      { id: 'implantes', num: '02', tag: 'Implantodontia · Cirurgia Guiada', title: 'Implantes Dentários Guiados por Computador', summary: 'Instalação virtualmente planejada sobre tomografia 3D feita na clínica.', image: 'https://images.unsplash.com/photo-1588776814546-1ffcf47267a5?auto=format&fit=crop&w=900&q=85', duration: '45 a 60 minutos', tech: 'Tomografia Cone Beam Própria + Guia 3D', points: ['Pós-operatório sereno com mínimo inchaço', 'Possibilidade de dente provisório imediato'] },
+      { id: 'clareamento', num: '03', tag: 'Estética Dental · Laser', title: 'Clareamento a Laser de Alta Performance', summary: 'Protocolo fotoativado com barreira mineral dessensibilizante para elevar a luminosidade.', image: 'https://images.unsplash.com/photo-1609840114035-3c981b782dfe?auto=format&fit=crop&w=900&q=85', duration: '50 minutos', tech: 'Laser terapêutico + Nano-hidroxiapatita', points: ['Minimiza sensibilidade durante e após a sessão', 'Gel estabilizado de pH neutro'] },
+      { id: 'invisalign', num: '04', tag: 'Ortodontia Digital', title: 'Invisalign & Ortodontia Estética Invisível', summary: 'Alinhadores transparentes removíveis projetados via scanner iTero.', image: 'https://images.unsplash.com/photo-1629909613654-28e377c37b09?auto=format&fit=crop&w=900&q=85', duration: 'Escaneamento em 15 min', tech: 'Scanner iTero 3D + ClinCheck', points: ['Visualize a evolução do sorriso na 1ª consulta', 'Removível para refeições e higienização'] }
+    ];
+
+    const SHADES = [
+      { code: 'A3', name: 'Esmalte Pigmentado', bg: 'linear-gradient(180deg, #D0BC8B 0%, #E2D2AC 100%)', targetProtocol: 'Clareamento a Laser de Alta Performance', desc: 'Tonalidade amarelada comum. Indicação principal: Clareamento a Laser.' },
+      { code: 'A2', name: 'Natural Clássico', bg: 'linear-gradient(180deg, #DDD0AE 0%, #EFE6CE 100%)', targetProtocol: 'Clareamento a Laser de Alta Performance', desc: 'Tom natural equilibrado. Sessão única de laser devolve luminosidade.' },
+      { code: 'A1', name: 'Claro Natural Harmônico', bg: 'linear-gradient(180deg, #E8E0CB 0%, #F7F4EA 100%)', targetProtocol: 'Lentes de Contato Dental (Cerâmica Pura)', desc: 'Tom mais solicitado em lentes cerâmicas: luminoso e translúcido.' },
+      { code: 'BL3', name: 'Branco Cerâmico Luxes', bg: 'linear-gradient(180deg, #F0EFE8 0%, #FFFFFF 100%)', targetProtocol: 'Lentes de Contato Dental (Cerâmica Pura)', desc: 'Brilho alto e refinado para reabilitações em porcelana pura.' }
+    ];
+
+    const TIMELINES = {
+      lentes: { label: 'Lentes Cerâmicas', steps: [{ day: 'Visita 01', title: 'Scanner 3D + Estúdio', text: 'Escaneamos a arcada digitalmente.' }, { day: 'Visita 02', title: 'Mockup em Boca', text: 'Você experimenta o novo sorriso antes de aprovar.' }, { day: 'Visita 03', title: 'Cimentação', text: 'Instalação das lâminas de porcelana pura.' }] }
+    };
+
+    const FAQS = [
+      { q: 'Clareamento dental a laser realmente causa sensibilidade?', a: 'Não precisa causar. Aplicamos protocolo dessensibilizante prévio associado a laser terapêutico.' },
+      { q: 'Quanto tempo duram as lentes de contato dental em cerâmica?', a: 'Duram em média de 12 a 20 anos ou mais quando bem acompanhadas.' },
+      { q: 'Ainda é preciso fazer moldagem de massinha?', a: 'Não. Operamos 100% com Scanner Intraoral 3D óptico.' }
+    ];
+
+    let activeDiag = 'desgastes';
+    let activeProto = PROTOCOLS[0].id;
+    let activeShade = 'A1';
+    let activeTimeline = 'lentes';
+
+    function crownPath(t, hOverride) {
+      const hw = t.w / 2;
+      const h = hOverride || t.h;
+      return `M ${-hw+2} 0 Q 0 -5 ${hw-2} 0 C ${hw} ${h*0.45} ${hw-1} ${h-4} ${hw-4} ${h} Q 0 ${h+2} ${-hw+4} ${h} C ${-hw+1} ${h-4} ${-hw} ${h*0.45} ${-hw+2} 0 Z`;
+    }
+
+    function renderOdontogram() {
+      const d = DIAGNOSTICS.find(item => item.id === activeDiag);
+      const svg = document.getElementById('odontogramSvg');
+      const grid = document.getElementById('complaintGrid');
+      const detail = document.getElementById('odontoDetail');
+
+      document.getElementById('archModeTitle').textContent = d.zoneLabel;
+      document.getElementById('archCaption').textContent = `${d.protocolName} · Planejamento Digital 3D`;
+
+      let html = `<path d="M 14 78 Q 205 22 396 78" fill="none" stroke="rgba(255,255,255,0.14)" stroke-width="1"/>`;
+      ARCH_TEETH.forEach(t => {
+        const isActive = d.activeIndices.includes(t.idx);
+        let fill = isActive ? 'rgba(255,255,255,0.14)' : 'rgba(255,255,255,0.03)';
+        let stroke = isActive ? '#D4BC94' : 'rgba(255,255,255,0.28)';
+        html += `<g class="tooth-node" data-diag="${t.diag}" transform="translate(${t.cx}, ${t.cy}) rotate(${t.rot})"><path d="${crownPath(t)}" fill="${fill}" stroke="${stroke}" stroke-width="${isActive ? 1.5 : 0.9}"/></g>`;
+      });
+
+      svg.innerHTML = html;
+      svg.querySelectorAll('.tooth-node').forEach(el => el.addEventListener('click', () => selectDiag(el.dataset.diag)));
+
+      grid.innerHTML = DIAGNOSTICS.map((item, i) => `
+        <button type="button" onclick="selectDiag('${item.id}')" class="complaint-row ${item.id === activeDiag ? 'active' : ''}">
+          <span><span class="tabular" style="opacity:0.6;margin-right:0.5rem;">0${i+1}</span>${item.complaint}</span>
+          <span>→</span>
+        </button>
+      `).join('');
+
+      detail.innerHTML = `
+        <span style="font-size:0.72rem;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:var(--gold);">${d.zoneLabel}</span>
+        <h3 class="serif" style="font-size:1.75rem;margin-top:0.35rem;line-height:1.15;">${d.protocolName}</h3>
+        <p style="font-size:0.9rem;color:var(--muted);margin-top:0.65rem;">${d.desc}</p>
+        <div class="meta-row">
+          <div><span>Previsão</span><strong>${d.visits}</strong></div>
+          <div><span>Conforto</span><strong>${d.comfort}</strong></div>
+        </div>
+        <div style="display:flex;gap:0.65rem;margin-top:1.4rem;flex-wrap:wrap;">
+          <button type="button" onclick="jumpToBooking('${d.protocolName}')" class="btn btn-dark">Agendar avaliação</button>
+          <a href="https://wa.me/${WA_NUMBER}?text=${encodeURIComponent('Olá, Luxes Odonto! Gostaria de informações sobre ' + d.protocolName)}" target="_blank" rel="noopener" class="btn btn-whatsapp">WhatsApp</a>
+        </div>
+      `;
+    }
+    function selectDiag(id) { activeDiag = id; renderOdontogram(); }
+
+    function renderExplorer() {
+      const list = document.getElementById('explorerList');
+      const stage = document.getElementById('explorerStage');
+      list.innerHTML = PROTOCOLS.map(p => `
+        <button type="button" onclick="selectProto('${p.id}')" class="proto-btn ${p.id === activeProto ? 'active' : ''}">
+          <span><span class="num tabular">${p.num}</span><span class="name">${p.title}</span></span>
+          <span>→</span>
+        </button>
+      `).join('');
+      const cur = PROTOCOLS.find(p => p.id === activeProto);
+      stage.innerHTML = `
+        <div>
+          <div class="frame proto-photo"><img src="${cur.image}" alt="${cur.title}"></div>
+          <div class="proto-content">
+            <span style="font-size:0.72rem;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:var(--gold);">${cur.tag} · ${cur.duration}</span>
+            <h3 class="serif" style="font-size:1.95rem;margin-top:0.35rem;">${cur.title}</h3>
+            <p style="font-size:0.9rem;color:var(--muted);margin-top:0.65rem;">${cur.summary}</p>
+            <div style="margin-top:1rem;font-size:0.8125rem;color:#fff;"><strong>Tecnologia:</strong> ${cur.tech}</div>
+            <ul class="proto-list">${cur.points.map(pt => `<li>${pt}</li>`).join('')}</ul>
+          </div>
+        </div>
+        <div style="padding:1.15rem 1.75rem 1.5rem;border-top:1px solid var(--line);display:flex;gap:0.65rem;flex-wrap:wrap;">
+          <button type="button" onclick="jumpToBooking('${cur.title}')" class="btn btn-dark">Agendar tratamento</button>
+          <a href="https://wa.me/${WA_NUMBER}?text=${encodeURIComponent('Olá! Gostaria de informações sobre ' + cur.title)}" target="_blank" rel="noopener" class="btn btn-whatsapp">WhatsApp</a>
+        </div>
+      `;
+    }
+    function selectProto(id) { activeProto = id; renderExplorer(); }
+
+    function renderShades() {
+      const wrap = document.getElementById('shadeSwatches');
+      wrap.innerHTML = SHADES.map(s => `
+        <button type="button" onclick="selectShade('${s.code}')" class="ceramic-tab ${s.code === activeShade ? 'active' : ''}">
+          <span class="porcelain-sample" style="background:${s.bg};"></span>
+          <span class="tabular" style="font-size:0.78rem;font-weight:600;">${s.code}</span>
+        </button>
+      `).join('');
+      const s = SHADES.find(x => x.code === activeShade);
+      document.getElementById('shadeName').textContent = s.name;
+      document.getElementById('shadeDesc').textContent = s.desc;
+      document.getElementById('shadeTag').textContent = `Escala VITA · Tom ${s.code}`;
+      document.getElementById('shadeApplyBtn').onclick = () => jumpToBooking(s.targetProtocol);
+    }
+    function selectShade(code) { activeShade = code; renderShades(); }
+
+    function renderTimeline() {
+      const tabs = document.getElementById('timelineTabs');
+      const steps = document.getElementById('timelineSteps');
+      tabs.innerHTML = Object.entries(TIMELINES).map(([k, v]) => `<button type="button" onclick="selectTimeline('${k}')" class="t-tab ${k === activeTimeline ? 'active' : ''}">${v.label}</button>`).join('');
+      steps.innerHTML = TIMELINES[activeTimeline].steps.map(st => `
+        <div class="t-step">
+          <span style="font-size:0.72rem;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:var(--gold);">${st.day}</span>
+          <div><strong style="font-size:0.9rem;display:block;color:var(--petrol);">${st.title}</strong><span style="font-size:0.82rem;color:var(--muted);">${st.text}</span></div>
+        </div>
+      `).join('');
+    }
+    function selectTimeline(key) { activeTimeline = key; renderTimeline(); }
+
+    function renderFaqs() {
+      document.getElementById('faqList').innerHTML = FAQS.map((item, idx) => `
+        <div class="faq-item">
+          <button type="button" class="faq-btn" onclick="toggleFaq(this)"><span>${item.q}</span><span>+</span></button>
+          <div class="faq-body ${idx === 0 ? 'open' : ''}">${item.a}</div>
+        </div>
+      `).join('');
+    }
+    function toggleFaq(btn) {
+      const body = btn.nextElementSibling;
+      body.classList.toggle('open');
+    }
+
+    function initBooking() {
+      const grid = document.getElementById('dateSlotsGrid');
+      const days = ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'];
+      const months = ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'];
+      const dates = [];
+      const d = new Date();
+      while (dates.length < 3) {
+        d.setDate(d.getDate() + 1);
+        if (d.getDay() !== 0) {
+          dates.push({ label: `${days[d.getDay()]}, ${String(d.getDate()).padStart(2, '0')} ${months[d.getMonth()]}`, shortDay: days[d.getDay()], dayNum: `${String(d.getDate()).padStart(2, '0')}/${String(d.getMonth() + 1).padStart(2, '0')}` });
+        }
+      }
+      grid.innerHTML = dates.map((dt, idx) => `
+        <button type="button" data-date="${dt.label}" class="slot-btn date-btn tabular ${idx === 0 ? 'active' : ''}">
+          <span style="display:block;font-size:0.68rem;opacity:0.75;">${dt.shortDay}</span>
+          <span>${dt.dayNum}</span>
+        </button>
+      `).join('');
+      grid.querySelectorAll('.date-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          grid.querySelectorAll('.date-btn').forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+        });
+      });
+    }
+
+    function jumpToBooking(title) {
+      document.getElementById('agendamento').scrollIntoView({ behavior: 'smooth' });
+    }
+
+    document.getElementById('schedulingForm').addEventListener('submit', e => {
+      e.preventDefault();
+      const name = document.getElementById('patientName').value.trim();
+      document.getElementById('feedbackTitle').textContent = `Pré-agendamento registrado para ${name}.`;
+      document.getElementById('feedbackText').textContent = `Nossa equipe na Savassi entrará em contato em instantes.`;
+      document.getElementById('bookingResult').classList.add('show');
+    });
+
+    function toggleConcierge(force) {
+      const panel = document.getElementById('conciergePanel');
+      if (typeof force === 'boolean') panel.classList.toggle('open', force);
+      else panel.classList.toggle('open');
+    }
+    function askConcierge(topic) {
+      const feed = document.getElementById('conciergeFeed');
+      feed.innerHTML += `<div class="msg-bot">Dúvida selecionada: ${topic}. Fale conosco no WhatsApp para atendimento imediato.</div>`;
+      feed.scrollTop = feed.scrollHeight;
+    }
+    function sendConcierge() {
+      const input = document.getElementById('conciergeInput');
+      if (!input.value.trim()) return;
+      input.value = '';
+      const feed = document.getElementById('conciergeFeed');
+      feed.innerHTML += `<div class="msg-bot">Mensagem recebida! Nossa equipe responderá em breve.</div>`;
+      feed.scrollTop = feed.scrollHeight;
+    }
+
+    document.getElementById('currentYear').textContent = new Date().getFullYear();
+    renderOdontogram();
+    renderExplorer();
+    renderShades();
+    renderTimeline();
+    renderFaqs();
+    initBooking();
+  </script>
+</body>
+</html>
