@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Briefing & Pré-Cadastro · Júlia Siqueira</title>
+  <meta name="theme-color" content="#09090b">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;1,500&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #09090b;
+      --bg-deep: #050507;
+      --surface: #111116;
+      --surface-hover: #181822;
+      --border: rgba(255, 255, 255, 0.08);
+      --accent: #6366f1;
+      --accent-hover: #818cf8;
+      --accent-glow: rgba(99, 102, 241, 0.14);
+      --accent-line: rgba(99, 102, 241, 0.38);
+      --text: #f4f4f8;
+      --muted: #9b9aa6;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-weight: 300;
+      line-height: 1.7;
+      padding-bottom: 100px;
+    }
+    header {
+      max-width: 1440px;
+      margin: 0 auto;
+      padding: 24px 5vw;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(9, 9, 11, 0.85);
+      backdrop-filter: blur(12px);
+      position: sticky;
+      top: 0;
+      z-index: 40;
+      border-bottom: 1px solid var(--border);
+    }
+    .logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 24px;
+      font-weight: 500;
+      text-decoration: none;
+      color: var(--text);
+      letter-spacing: -0.02em;
+    }
+    .logo span { color: var(--accent); font-style: italic; }
+    .back {
+      font-size: 12.5px;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .back:hover { color: var(--text); }
+
+    .container { max-width: 900px; margin: 60px auto 0; padding: 0 24px; }
+    
+    .kicker {
+      font-size: 11.5px;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      color: var(--accent);
+      font-weight: 600;
+      margin-bottom: 12px;
+      display: block;
+    }
+    h1 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(36px, 5vw, 52px);
+      font-weight: 500;
+      line-height: 1.15;
+      margin-bottom: 16px;
+      letter-spacing: -0.01em;
+    }
+    h1 em { color: var(--accent); font-style: italic; }
+    .lead { color: var(--muted); font-size: 16px; margin-bottom: 48px; max-width: 680px; }
+
+    .section-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 40px;
+      margin-bottom: 28px;
+      transition: border-color 0.2s;
+    }
+    .section-card:hover { border-color: rgba(255, 255, 255, 0.14); }
+    @media (max-width: 768px) { .section-card { padding: 24px 20px; } }
+
+    .section-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 24px;
+      font-weight: 500;
+      margin-bottom: 8px;
+    }
+    .section-desc { font-size: 13.5px; color: var(--muted); margin-bottom: 28px; }
+
+    .field { margin-bottom: 22px; }
+    .field:last-child { margin-bottom: 0; }
+    
+    label.lbl {
+      display: block;
+      font-size: 12.5px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      font-weight: 600;
+      margin-bottom: 8px;
+      color: var(--text);
+    }
+    label.lbl small { display: block; font-weight: 300; text-transform: none; letter-spacing: normal; color: var(--muted); font-size: 13px; margin-top: 3px; }
+
+    input[type="text"], input[type="tel"], textarea, select {
+      width: 100%;
+      background: var(--bg-deep);
+      color: var(--text);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 14px 18px;
+      font-family: inherit;
+      font-size: 14.5px;
+      transition: all 0.2s;
+    }
+    input:focus, textarea:focus, select:focus {
+      outline: none;
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px var(--accent-glow);
+    }
+    textarea { min-height: 110px; resize: vertical; }
+
+    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+    @media (max-width: 720px) { .grid-2 { grid-template-columns: 1fr; } }
+
+    .pills-group { display: flex; flex-wrap: wrap; gap: 10px; }
+    .pill-opt {
+      padding: 11px 20px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: var(--bg-deep);
+      color: var(--muted);
+      font-family: inherit;
+      font-size: 13.5px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .pill-opt:hover { border-color: rgba(255,255,255,0.2); color: var(--text); }
+    .pill-opt.active {
+      background: var(--accent-glow);
+      border-color: var(--accent-line);
+      color: var(--text);
+      font-weight: 500;
+    }
+
+    .btn-submit {
+      width: 100%;
+      padding: 18px 32px;
+      border-radius: 999px;
+      border: 0;
+      background: var(--accent);
+      color: #fff;
+      font-family: inherit;
+      font-weight: 600;
+      font-size: 15px;
+      cursor: pointer;
+      transition: all 0.2s;
+      margin-top: 12px;
+      box-shadow: 0 8px 24px rgba(99, 102, 241, 0.25);
+    }
+    .btn-submit:hover {
+      background: var(--accent-hover);
+      transform: translateY(-2px);
+      box-shadow: 0 12px 32px rgba(99, 102, 241, 0.35);
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <a class="logo" href="index.html">Júlia Siqueira<span>.</span></a>
+    <a class="back" href="index.html">← Voltar ao portfólio</a>
+  </header>
+
+  <main class="container">
+    <span class="kicker">Direção & Planejamento</span>
+    <h1>Briefing de <em>Projeto</em></h1>
+    <p class="lead">Conte-nos sobre a sua marca e o seu objetivo. A partir destas informações, estruturaremos a solução digital ideal sob medida para o seu posicionamento.</p>
+
+    <form action="https://formspree.io/f/mvkaappg" method="POST" id="briefingForm">
+      
+      <!-- SEÇÃO 01 -->
+      <div class="section-card">
+        <h2 class="section-title">01. Identidade & Contato</h2>
+        <p class="section-desc">Informações essenciais para formalizarmos o projeto.</p>
+
+        <div class="grid-2 field">
+          <div>
+            <label class="lbl">Seu Nome / Responsável *</label>
+            <input type="text" name="responsavel" placeholder="Ex: Dra. Mariana Costa" required>
+          </div>
+          <div>
+            <label class="lbl">Nome da Clínica / Marca *</label>
+            <input type="text" name="empresa" placeholder="Ex: Clínica Maison Lumière" required>
+          </div>
+        </div>
+
+        <div class="grid-2 field" style="margin-top: 20px;">
+          <div>
+            <label class="lbl">Segmento de Atuação *</label>
+            <input type="text" name="segmento" placeholder="Ex: Odontologia Estética, Arquitetura..." required>
+          </div>
+          <div>
+            <label class="lbl">Bairro & Cidade *</label>
+            <input type="text" name="localizacao" placeholder="Ex: Lourdes · Belo Horizonte" required>
+          </div>
+        </div>
+
+        <div class="grid-2 field" style="margin-top: 20px;">
+          <div>
+            <label class="lbl">WhatsApp para Contato / Leads *</label>
+            <input type="tel" name="whatsapp" placeholder="(31) 99999-9999" required>
+          </div>
+          <div>
+            <label class="lbl">Instagram Comercial</label>
+            <input type="text" name="instagram" placeholder="@suamarca">
+          </div>
+        </div>
+      </div>
+
+      <!-- SEÇÃO 02 -->
+      <div class="section-card">
+        <h2 class="section-title">02. Essência & Objetivo</h2>
+        <p class="section-desc">O que você deseja alcançar com este novo espaço digital?</p>
+
+        <div class="field">
+          <label class="lbl">Principal objetivo do site
+            <small>Ex: Quero transmitir mais autoridade para atrair pacientes de alto padrão, expor meus tratamentos principais ou facilitar o agendamento.</small>
+          </label>
+          <textarea name="objetivo" placeholder="Descreva brevemente o que você busca resolver com o site..." required></textarea>
+        </div>
+
+        <div class="field" style="margin-top: 20px;">
+          <label class="lbl">Serviços ou Procedimentos em Destaque
+            <small>Liste os principais pilares que trazem mais retorno para o seu negócio.</small>
+          </label>
+          <textarea name="servicos" placeholder="Ex: 1. Lentes de Contato Dental&#10;2. Implantes Guiados&#10;3. Clareamento a Laser" required></textarea>
+        </div>
+      </div>
+
+      <!-- SEÇÃO 03 -->
+      <div class="section-card">
+        <h2 class="section-title">03. Direção Visual</h2>
+        <p class="section-desc">Qual tom estético mais se alinha à sua marca?</p>
+
+        <div class="field">
+          <label class="lbl">Estilo visual preferido</label>
+          <div class="pills-group" id="stylePills">
+            <button type="button" class="pill-opt active" data-val="Editorial & Sofisticado (Tons claros, areia, off-white)">Editorial & Sofisticado</button>
+            <button type="button" class="pill-opt" data-val="Dark Mode Imponente (Obsidiana e minimalismo)">Dark Mode Imponente</button>
+            <button type="button" class="pill-opt" data-val="Corporativo & Clínico (Limpo, assepsia elegante)">Corporativo & Clínico</button>
+            <button type="button" class="pill-opt" data-val="Acolhedor & Orgânico (Tons terrosos)">Acolhedor & Orgânico</button>
+          </div>
+          <input type="hidden" name="estilo_visual" id="estiloInput" value="Editorial & Sofisticado">
+        </div>
+
+        <div class="grid-2 field" style="margin-top: 24px;">
+          <div>
+            <label class="lbl">Cores da Marca (se já possuir)</label>
+            <input type="text" name="cores" placeholder="Ex: Dourado fosco e off-white">
+          </div>
+          <div>
+            <label class="lbl">Referência visual que admira</label>
+            <input type="text" name="referencia" placeholder="Cole um link ou @">
+          </div>
+        </div>
+      </div>
+
+      <button type="submit" class="btn-submit">Enviar Briefing para Análise →</button>
+    </form>
+  </main>
+
+  <script>
+    // Gerencia a seleção em pílula e atualiza o input oculto
+    document.querySelectorAll('#stylePills .pill-opt').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('#stylePills .pill-opt').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        document.getElementById('estiloInput').value = btn.dataset.val;
+      });
+    });
+  </script>
+</body>
+</html>
