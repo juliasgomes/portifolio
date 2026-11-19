@@ -14,37 +14,45 @@ const ADMIN_PASS = '290423';
 
 app.use(express.json({ limit: '50mb' }));
 
-async function mutateEmbeddedProjects(mutator) {
-  const html = await fs.readFile(INDEX_PATH, 'utf8');
-  const pattern = /(<script[^>]*id=["']embeddedProjectsData["'][^>]*>)([\s\S]*?)(<\/script>)/i;
-  const match = html.match(pattern);
-  if (!match) {
-    throw new Error('Bloco embeddedProjectsData não encontrado em index.html');
-  }
-  const current = JSON.parse(match[2].trim() || '[]');
-  const next = mutator(current);
-  const version = String(Date.now());
-  const serialized = JSON.stringify(next).replace(/<\/script/gi, '<\\/script');
+let writeQueue = Promise.resolve();
 
-  let updatedHtml = html.replace(pattern, (_m, openTag, _c, closeTag) => {
-    const taggedOpen = /data-version=/i.test(openTag)
-      ? openTag.replace(/data-version=["'][^"']*["']/i, `data-version="${version}"`)
-      : openTag.replace(/>$/, ` data-version="${version}">`);
-    return `${taggedOpen}${serialized}${closeTag}`;
-  });
+function mutateEmbeddedProjects(mutator) {
+  const run = async () => {
+    const html = await fs.readFile(INDEX_PATH, 'utf8');
+    const pattern = /(<script[^>]*id=["']embeddedProjectsData["'][^>]*>)([\s\S]*?)(<\/script>)/i;
+    const match = html.match(pattern);
+    if (!match) {
+      throw new Error('Bloco embeddedProjectsData não encontrado em index.html');
+    }
+    const current = JSON.parse(match[2].trim() || '[]');
+    const next = mutator(current);
+    const version = String(Date.now());
+    const serialized = JSON.stringify(next).replace(/<\/script/gi, '<\\/script');
 
-  updatedHtml = updatedHtml.replace(
-    /(<div[^>]*id=["']projectsGrid["'][^>]*>)[\s\S]*?(<\/div>\s*<\/section>)/i,
-    '$1$2'
-  );
+    let updatedHtml = html.replace(pattern, (_m, openTag, _c, closeTag) => {
+      const taggedOpen = /data-version=/i.test(openTag)
+        ? openTag.replace(/data-version=["'][^"']*["']/i, `data-version="${version}"`)
+        : openTag.replace(/>$/, ` data-version="${version}">`);
+      return `${taggedOpen}${serialized}${closeTag}`;
+    });
 
-  await fs.writeFile(INDEX_PATH, updatedHtml, 'utf8');
-  return { count: next.length, version };
+    updatedHtml = updatedHtml.replace(
+      /(<div[^>]*id=["']projectsGrid["'][^>]*>)[\s\S]*?(<\/div>\s*<\/section>)/i,
+      '$1$2'
+    );
+
+    await fs.writeFile(INDEX_PATH, updatedHtml, 'utf8');
+    return { count: next.length, version };
+  };
+
+  const task = writeQueue.then(run, run);
+  writeQueue = task.catch(() => {});
+  return task;
 }
 
 app.post('/api/projects/upsert', async (req, res) => {
   try {
-    const { password, project, keepExistingHtml } = req.body || {};
+    const { password, project, keepExistingHtml, order } = req.body || {};
     if (password !== ADMIN_PASS) return res.status(401).json({ error: 'Senha inválida' });
     if (!project || !project.id) return res.status(400).json({ error: 'Projeto inválido' });
 
@@ -58,6 +66,19 @@ app.post('/api/projects/upsert', async (req, res) => {
         list[idx] = merged;
       } else {
         list.push(project);
+      }
+
+      if (Array.isArray(order) && order.length) {
+        const map = new Map(list.map((p) => [p.id, p]));
+        const ordered = [];
+        for (const id of order) {
+          if (map.has(id)) {
+            ordered.push(map.get(id));
+            map.delete(id);
+          }
+        }
+        for (const p of map.values()) ordered.push(p);
+        return ordered;
       }
       return list;
     });

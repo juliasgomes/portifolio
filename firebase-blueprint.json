@@ -1,0 +1,145 @@
+{
+  "entities": {
+    "AdminUser": {
+      "title": "AdminUser",
+      "description": "Authorized portfolio administrator record.",
+      "type": "object",
+      "properties": {
+        "email": {
+          "type": "string",
+          "format": "email",
+          "maxLength": 200,
+          "description": "Administrator email address."
+        },
+        "role": {
+          "type": "string",
+          "enum": ["admin"],
+          "maxLength": 20,
+          "description": "Role granted to the user."
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Server creation timestamp."
+        }
+      },
+      "required": ["email", "role", "createdAt"]
+    },
+    "PortfolioProject": {
+      "title": "PortfolioProject",
+      "description": "Metadata and optional cover image for a portfolio showcase project.",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$",
+          "description": "Unique project identifier."
+        },
+        "title": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 200,
+          "description": "Display title of the project."
+        },
+        "cat": {
+          "type": "string",
+          "enum": ["clinicas", "restaurantes", "escritorios", "empresas"],
+          "maxLength": 32,
+          "description": "Filter category."
+        },
+        "tag": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 120,
+          "description": "Niche or tag label."
+        },
+        "desc": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 1500,
+          "description": "Short project description shown on the card."
+        },
+        "cover": {
+          "type": "string",
+          "maxLength": 500000,
+          "description": "Optional compressed cover data URL or image URL."
+        },
+        "order": {
+          "type": "integer",
+          "description": "Display order index starting at 0."
+        },
+        "chunkCount": {
+          "type": "integer",
+          "description": "Number of HTML chunks stored in the chunks subcollection."
+        },
+        "ownerId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "description": "UID of the admin user who created the record."
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Immutable server creation timestamp."
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Server last-update timestamp."
+        }
+      },
+      "required": ["id", "title", "cat", "tag", "desc", "cover", "order", "chunkCount", "ownerId", "createdAt", "updatedAt"]
+    },
+    "ProjectHtmlChunk": {
+      "title": "ProjectHtmlChunk",
+      "description": "Chunk of a project's embedded HTML document so large sites stay under Firestore's 1MB document limit.",
+      "type": "object",
+      "properties": {
+        "index": {
+          "type": "integer",
+          "description": "Zero-based sequential chunk index."
+        },
+        "data": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 600000,
+          "description": "Substring chunk of the project's HTML source."
+        },
+        "ownerId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "description": "UID of the admin user who owns the chunk."
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Immutable server creation timestamp."
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Server last-update timestamp."
+        }
+      },
+      "required": ["index", "data", "ownerId", "createdAt", "updatedAt"]
+    }
+  },
+  "firestore": {
+    "/admins/{adminId}": {
+      "schema": { "$ref": "#/entities/AdminUser" },
+      "description": "Authorized admin users allowed to manage portfolio projects."
+    },
+    "/projects/{projectId}": {
+      "schema": { "$ref": "#/entities/PortfolioProject" },
+      "description": "Public portfolio showcase projects."
+    },
+    "/projects/{projectId}/chunks/{chunkId}": {
+      "schema": { "$ref": "#/entities/ProjectHtmlChunk" },
+      "description": "Chunked HTML source documents belonging to a portfolio project."
+    }
+  }
+}
