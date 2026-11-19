@@ -1,0 +1,1607 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Central do Portfólio · Júlia Siqueira</title>
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="theme-color" content="#09090b">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%2309090b'/%3E%3Ctext x='32' y='45' font-size='36' font-family='Georgia,serif' font-weight='500' text-anchor='middle' fill='%236366f1'%3EJ%3C/text%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #09090b;
+      --bg-deep: #050507;
+      --surface: #111116;
+      --surface-2: #181822;
+      --border: rgba(255, 255, 255, 0.09);
+      --accent: #6366f1;
+      --accent-hover: #818cf8;
+      --accent-soft: rgba(99, 102, 241, 0.14);
+      --accent-line: rgba(99, 102, 241, 0.42);
+      --text: #f4f4f8;
+      --muted: #9b9aa6;
+      --danger: #ef4444;
+      --ok: #10b981;
+      --warn: #f59e0b;
+      color-scheme: dark;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+      font-size: 14.5px;
+      line-height: 1.6;
+      min-height: 100dvh;
+      -webkit-font-smoothing: antialiased;
+    }
+    h1, h2, h3, .serif { font-family: 'Cormorant Garamond', Georgia, serif; font-weight: 500; }
+    [hidden] { display: none !important; }
+
+    .topbar {
+      position: sticky; top: 0; z-index: 50;
+      background: rgba(9, 9, 11, 0.88);
+      backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px);
+      border-bottom: 1px solid var(--border);
+      padding: 14px clamp(16px, 4vw, 40px);
+      display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px;
+    }
+    .brand { display: flex; align-items: center; gap: 12px; text-decoration: none; color: var(--text); }
+    .brand-title { font-family: 'Cormorant Garamond', serif; font-size: 22px; }
+    .brand-title span { color: var(--accent); }
+    .brand-sub { font-size: 11px; text-transform: uppercase; letter-spacing: 0.14em; color: var(--muted); border-left: 1px solid var(--border); padding-left: 12px; }
+    .topbar-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; }
+
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+      font: 600 13px 'Plus Jakarta Sans', sans-serif; letter-spacing: 0.03em;
+      border: 1px solid transparent; border-radius: 999px;
+      padding: 10px 20px; cursor: pointer; text-decoration: none;
+      transition: background .2s ease, border-color .2s ease, transform .2s ease, color .2s ease;
+    }
+    .btn[disabled] { opacity: 0.5; cursor: default; pointer-events: none; }
+    .btn-primary { background: var(--accent); color: #fff; }
+    .btn-primary:hover { background: var(--accent-hover); transform: translateY(-1px); }
+    .btn-ghost { background: transparent; color: var(--text); border-color: var(--border); }
+    .btn-ghost:hover { border-color: var(--accent); color: var(--accent-hover); }
+    .btn-danger { background: rgba(239, 68, 68, 0.14); color: #fca5a5; border-color: rgba(239, 68, 68, 0.35); }
+    .btn-danger:hover { background: rgba(239, 68, 68, 0.25); }
+    .btn-sm { padding: 7px 14px; font-size: 12px; }
+
+    .wrap { max-width: 1220px; margin: 0 auto; padding: 28px clamp(16px, 4vw, 40px) 80px; }
+
+    /* Auth Gate */
+    .gate-card {
+      max-width: 480px; margin: 72px auto;
+      background: var(--surface); border: 1px solid var(--accent-line); border-radius: 20px;
+      padding: 36px 30px; text-align: center;
+      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.5);
+    }
+    .gate-ico {
+      width: 52px; height: 52px; border-radius: 14px; margin: 0 auto 18px;
+      display: grid; place-items: center;
+      background: var(--accent-soft); border: 1px solid var(--accent-line); color: var(--accent-hover);
+    }
+    .gate-card h1 { font-size: 32px; line-height: 1.1; margin-bottom: 10px; }
+    .gate-card p { color: var(--muted); font-size: 14px; margin-bottom: 24px; }
+    .gate-note { margin-top: 16px; font-size: 12.5px; color: var(--muted); }
+    .gate-note a { color: var(--accent-hover); }
+
+    /* Notice Banner */
+    .notice {
+      padding: 12px 16px; border-radius: 12px; font-size: 13.5px;
+      border: 1px solid var(--accent-line); background: var(--accent-soft); color: #e0e7ff;
+      margin-bottom: 20px; display: flex; align-items: center; justify-content: space-between; gap: 12px;
+    }
+    .notice.is-error { border-color: rgba(245, 158, 11, 0.45); background: rgba(245, 158, 11, 0.12); color: #fde68a; }
+    .notice.is-ok { border-color: rgba(16, 185, 129, 0.4); background: rgba(16, 185, 129, 0.12); color: #a7f3d0; }
+
+    /* Tabs */
+    .studio-tabs {
+      display: flex; flex-wrap: wrap; gap: 8px;
+      margin-bottom: 24px; padding-bottom: 16px; border-bottom: 1px solid var(--border);
+    }
+    .stab {
+      background: var(--surface); color: var(--muted); border: 1px solid var(--border);
+      border-radius: 999px; padding: 9px 18px; font: 600 12.5px 'Plus Jakarta Sans', sans-serif;
+      cursor: pointer; transition: all .2s ease;
+    }
+    .stab:hover { color: var(--text); border-color: rgba(255, 255, 255, 0.25); }
+    .stab[aria-selected="true"] { background: var(--accent); color: #fff; border-color: var(--accent); }
+
+    /* Cards & Forms */
+    .card {
+      background: var(--surface); border: 1px solid var(--border); border-radius: 16px;
+      padding: 24px; margin-bottom: 20px;
+    }
+    .card-head {
+      display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 12px;
+      margin-bottom: 18px; padding-bottom: 12px; border-bottom: 1px solid var(--border);
+    }
+    .card-head h2 { font-size: 25px; line-height: 1.15; }
+    .card-head p { color: var(--muted); font-size: 13px; }
+
+    .grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; }
+    .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+    @media (max-width: 780px) { .grid-2, .grid-3 { grid-template-columns: 1fr; } }
+
+    .field { display: flex; flex-direction: column; gap: 6px; margin-bottom: 14px; }
+    .field:last-child { margin-bottom: 0; }
+    .field label { font-size: 12px; font-weight: 600; color: var(--muted); letter-spacing: 0.03em; }
+    .field small { font-size: 11.5px; color: var(--muted); font-weight: 400; }
+    .field input, .field select, .field textarea {
+      width: 100%; background: var(--bg); color: var(--text);
+      border: 1px solid var(--border); border-radius: 10px;
+      padding: 10px 12px; font: 400 14px 'Plus Jakarta Sans', sans-serif;
+    }
+    .field textarea { min-height: 82px; resize: vertical; }
+    .field input:focus, .field select:focus, .field textarea:focus { border-color: var(--accent); outline: none; }
+
+    .subcard {
+      background: var(--bg-deep); border: 1px solid var(--border); border-radius: 12px;
+      padding: 16px; margin-bottom: 12px;
+    }
+    .subcard-head {
+      display: flex; justify-content: space-between; align-items: center; gap: 10px;
+      margin-bottom: 12px; font-size: 12.5px; font-weight: 600; color: var(--accent-hover);
+    }
+
+    /* Projects List */
+    .proj-layout { display: grid; grid-template-columns: 1fr 1.05fr; gap: 22px; align-items: start; }
+    @media (max-width: 980px) { .proj-layout { grid-template-columns: 1fr; } }
+
+    .cover-preview-box {
+      display: flex; align-items: center; gap: 14px;
+      margin-top: 8px; padding: 10px; border-radius: 10px;
+      background: var(--bg); border: 1px solid var(--border);
+    }
+    .cover-preview-box img { width: 96px; height: 60px; object-fit: cover; border-radius: 6px; flex-shrink: 0; border: 1px solid var(--border); }
+
+    .proj-list { display: flex; flex-direction: column; gap: 10px; }
+    .proj-row {
+      display: flex; align-items: center; justify-content: space-between; gap: 12px;
+      background: var(--bg); border: 1px solid var(--border); border-radius: 12px; padding: 12px;
+      transition: border-color .2s ease, opacity .2s ease;
+    }
+    .proj-row.is-editing { border-color: var(--accent); background: rgba(99, 102, 241, 0.08); }
+    .proj-row.is-dragging { opacity: 0.45; }
+    .proj-row.drag-over { border-color: var(--accent); box-shadow: 0 0 0 1px var(--accent); }
+    .proj-left { display: flex; align-items: center; gap: 12px; min-width: 0; flex: 1; }
+    .drag-handle { cursor: grab; color: var(--muted); padding: 4px 2px; flex-shrink: 0; }
+    .proj-mini {
+      width: 64px; height: 42px; border-radius: 7px; overflow: hidden; flex-shrink: 0;
+      background: var(--surface-2); border: 1px solid var(--border);
+      display: grid; place-items: center; font-size: 10px; color: var(--muted); text-align: center;
+    }
+    .proj-mini img { width: 100%; height: 100%; object-fit: cover; }
+    .proj-info { min-width: 0; flex: 1; }
+    .proj-info b { display: block; font-size: 14px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .proj-info span { font-size: 12px; color: var(--muted); }
+    .proj-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; flex-shrink: 0; }
+    .btn-icon {
+      width: 30px; height: 30px; border-radius: 8px; padding: 0;
+      background: var(--surface); border: 1px solid var(--border); color: var(--muted);
+      display: inline-flex; align-items: center; justify-content: center; cursor: pointer;
+    }
+    .btn-icon:hover:not(:disabled) { border-color: var(--accent); color: var(--accent-hover); }
+    .btn-icon:disabled { opacity: 0.3; cursor: default; }
+
+    .save-bar {
+      position: sticky; bottom: 16px; z-index: 40;
+      background: rgba(17, 17, 22, 0.94); backdrop-filter: blur(14px);
+      border: 1px solid var(--accent-line); border-radius: 16px;
+      padding: 14px 20px; margin-top: 12px;
+      display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px;
+      box-shadow: 0 18px 40px rgba(0, 0, 0, 0.55);
+    }
+
+    /* Preview Dialog */
+    dialog.preview {
+      width: min(1160px, 95vw); height: min(88vh, 880px); margin: auto; padding: 0;
+      border: 1px solid var(--border); border-radius: 16px; background: var(--surface); color: var(--text);
+    }
+    dialog.preview[open] { display: flex; flex-direction: column; }
+    dialog.preview::backdrop { background: rgba(4, 4, 6, 0.85); backdrop-filter: blur(8px); }
+    .preview-head { display: flex; align-items: center; gap: 12px; padding: 12px 18px; border-bottom: 1px solid var(--border); }
+    .preview-head h3 { flex: 1; font-size: 19px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .preview-body { flex: 1; min-height: 0; background: #050507; display: flex; justify-content: center; }
+    .preview-body iframe { width: 100%; height: 100%; border: 0; background: #fff; }
+    .preview-body.is-mobile { padding: 14px 0; }
+    .preview-body.is-mobile iframe { width: 390px; max-width: 100%; border-radius: 16px; border: 1px solid var(--border); }
+  </style>
+</head>
+<body>
+
+  <header class="topbar">
+    <a class="brand" href="/">
+      <span class="brand-title">Júlia Siqueira<span>.</span></span>
+      <span class="brand-sub">Central /admin</span>
+    </a>
+    <div class="topbar-actions">
+      <a class="btn btn-ghost btn-sm" href="/" target="_blank" rel="noopener">Ver portfólio ao vivo ↗</a>
+      <button type="button" class="btn btn-ghost btn-sm" id="btnSignOut" hidden>Sair</button>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <!-- TELA DE LOGIN GOOGLE -->
+    <section class="gate-card" id="authGate">
+      <div class="gate-ico" aria-hidden="true">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+      </div>
+      <h1>Controle do Portfólio</h1>
+      <p id="gateDesc">Conecte-se com a conta Google autorizada (<strong>julia.sggomes@gmail.com</strong>) para adicionar projetos, trocar capas e editar toda a escrita do seu portfólio com sincronização em todos os dispositivos.</p>
+      <button type="button" class="btn btn-primary" id="btnGoogleLogin" style="width:100%;">Conectar com Google</button>
+      <div id="gateNotice" class="notice is-error" style="margin-top:16px;text-align:left;" hidden></div>
+      <div class="gate-note">
+        Dica: se o pop-up for bloqueado dentro do preview, <a href="/admin" target="_blank" rel="noopener">abra esta página /admin em uma nova aba ↗</a>.
+      </div>
+    </section>
+
+    <!-- ESTÚDIO DE CONTROLE COMPLETO -->
+    <section id="studioApp" hidden>
+      <div id="studioNotice" class="notice" hidden></div>
+
+      <nav class="studio-tabs" role="tablist" aria-label="Áreas de edição do portfólio">
+        <button type="button" class="stab" role="tab" data-tab="projetos" aria-selected="true">Projetos da Vitrine (<span id="tabProjCount">0</span>)</button>
+        <button type="button" class="stab" role="tab" data-tab="hero" aria-selected="false">Topo, Hero & Vitrine</button>
+        <button type="button" class="stab" role="tab" data-tab="automacoes" aria-selected="false">Automações & Diferenciais</button>
+        <button type="button" class="stab" role="tab" data-tab="sobre" aria-selected="false">Sobre, Marcas & Processo</button>
+        <button type="button" class="stab" role="tab" data-tab="contato" aria-selected="false">Contato & Rodapé</button>
+      </nav>
+
+      <!-- ABA 1: PROJETOS -->
+      <div id="panel-projetos" class="studio-panel">
+        <div class="proj-layout">
+          <div class="card">
+            <div class="card-head">
+              <div>
+                <h2 id="projFormHeading">Adicionar novo projeto</h2>
+                <p>Suba o arquivo .HTML do site e, se quiser, uma foto de capa.</p>
+              </div>
+              <button type="button" class="btn btn-ghost btn-sm" id="btnCancelProjEdit" hidden>Cancelar edição</button>
+            </div>
+            <form id="projForm">
+              <div class="field">
+                <label for="pTitle">Título do projeto *</label>
+                <input type="text" id="pTitle" placeholder="Ex.: Luxes Odonto · Odontologia Especializada" required>
+              </div>
+              <div class="grid-2">
+                <div class="field">
+                  <label for="pCat">Categoria *</label>
+                  <select id="pCat" required>
+                    <option value="clinicas">Clínicas</option>
+                    <option value="restaurantes">Restaurantes</option>
+                    <option value="escritorios">Escritórios</option>
+                    <option value="empresas">Empresas</option>
+                  </select>
+                </div>
+                <div class="field">
+                  <label for="pTag">Tag / Nicho *</label>
+                  <input type="text" id="pTag" placeholder="Ex.: Odontologia e estética dental" required>
+                </div>
+              </div>
+              <div class="field">
+                <label for="pHtmlFile" id="pHtmlLabel">Arquivo .HTML do site *</label>
+                <input type="file" id="pHtmlFile" accept=".html,.htm,text/html" required>
+              </div>
+              <div class="field">
+                <label for="pCoverFile">Foto de capa (opcional — vazio usa prévia ao vivo do HTML)</label>
+                <input type="file" id="pCoverFile" accept="image/*">
+                <div class="cover-preview-box" id="coverPreviewBox" hidden>
+                  <img id="coverPreviewImg" src="" alt="Prévia da capa">
+                  <div style="flex:1;min-width:0;">
+                    <div id="coverPreviewLabel" style="font-size:12.5px;color:var(--text);">Capa atual selecionada</div>
+                    <label style="display:inline-flex;align-items:center;gap:6px;margin-top:4px;font-size:12px;color:#fca5a5;cursor:pointer;">
+                      <input type="checkbox" id="pRemoveCover"> Remover foto de capa (usar miniatura ao vivo)
+                    </label>
+                  </div>
+                </div>
+              </div>
+              <div class="field">
+                <label for="pDesc">Descrição do card *</label>
+                <textarea id="pDesc" rows="3" placeholder="Descreva os diferenciais e foco do projeto..." required></textarea>
+              </div>
+              <button type="submit" class="btn btn-primary" id="btnSaveProject" style="width:100%;">Publicar projeto na nuvem</button>
+            </form>
+          </div>
+
+          <div class="card">
+            <div class="card-head">
+              <div>
+                <h2>Projetos publicados (<span id="projListCount">0</span>)</h2>
+                <p>Arraste ou use as setas para definir a ordem na vitrine.</p>
+              </div>
+            </div>
+            <div class="proj-list" id="projList"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ABA 2: HERO & VITRINE -->
+      <div id="panel-hero" class="studio-panel" hidden>
+        <div class="card">
+          <div class="card-head">
+            <div>
+              <h2>Cabeçalho & Hero</h2>
+              <p>Use <code>*palavra*</code> no título para aplicar o destaque roxo em itálico.</p>
+            </div>
+          </div>
+          <div class="grid-2">
+            <div class="field">
+              <label for="cBrandName">Nome da marca no topo</label>
+              <input type="text" id="cBrandName">
+            </div>
+            <div class="field">
+              <label for="cPreCadLabel">Texto do botão de pré-cadastro</label>
+              <input type="text" id="cPreCadLabel">
+            </div>
+          </div>
+          <div class="field">
+            <label for="cHeroKicker">Kicker acima do título</label>
+            <input type="text" id="cHeroKicker">
+          </div>
+          <div class="field">
+            <label for="cHeroTitle">Título principal (H1)</label>
+            <textarea id="cHeroTitle" rows="2"></textarea>
+          </div>
+          <div class="field">
+            <label for="cHeroLead">Subtítulo / Texto de apoio</label>
+            <textarea id="cHeroLead" rows="3"></textarea>
+          </div>
+          <div class="grid-3">
+            <div class="field">
+              <label for="cHeroCtaText">Texto do botão principal</label>
+              <input type="text" id="cHeroCtaText">
+            </div>
+            <div class="field">
+              <label for="cHeroSecondaryText">Texto do link secundário</label>
+              <input type="text" id="cHeroSecondaryText">
+            </div>
+            <div class="field">
+              <label for="cHeroCtaMsg">Mensagem inicial no WhatsApp</label>
+              <input type="text" id="cHeroCtaMsg">
+            </div>
+          </div>
+          <div class="grid-3">
+            <div class="field"><label for="cProof0">Selo de prova 1</label><input type="text" id="cProof0"></div>
+            <div class="field"><label for="cProof1">Selo de prova 2</label><input type="text" id="cProof1"></div>
+            <div class="field"><label for="cProof2">Selo de prova 3</label><input type="text" id="cProof2"></div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-head">
+            <div><h2>Quadro Lateral do Hero & Cabeçalho da Vitrine</h2></div>
+          </div>
+          <div class="field">
+            <label for="cFlowTitle">Título do quadro lateral</label>
+            <input type="text" id="cFlowTitle">
+          </div>
+          <div class="grid-2" id="flowStepsContainer"></div>
+          <div class="grid-2" style="margin-top:16px;padding-top:16px;border-top:1px solid var(--border);">
+            <div class="field">
+              <label for="cProjKicker">Kicker da Vitrine de Projetos</label>
+              <input type="text" id="cProjKicker">
+            </div>
+            <div class="field">
+              <label for="cProjTitle">Título da Vitrine (use *palavra* para destaque)</label>
+              <input type="text" id="cProjTitle">
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ABA 3: AUTOMAÇÕES & DIFERENCIAIS -->
+      <div id="panel-automacoes" class="studio-panel" hidden>
+        <div class="card">
+          <div class="card-head">
+            <div>
+              <h2>Seção de Automações</h2>
+              <p>Edite as abas, títulos, descrições e públicos indicados de cada automação.</p>
+            </div>
+          </div>
+          <div class="field">
+            <label for="cAutoTitle">Título da seção Automações</label>
+            <input type="text" id="cAutoTitle">
+          </div>
+          <div id="autoGroupsContainer"></div>
+        </div>
+
+        <div class="card">
+          <div class="card-head">
+            <div><h2>Seção Diferenciais</h2></div>
+          </div>
+          <div class="grid-2">
+            <div class="field">
+              <label for="cDiffTitle">Título da seção</label>
+              <input type="text" id="cDiffTitle">
+            </div>
+            <div class="field">
+              <label for="cDiffSubtitle">Texto explicativo ao lado</label>
+              <textarea id="cDiffSubtitle" rows="2"></textarea>
+            </div>
+          </div>
+          <div class="grid-2" id="diffItemsContainer"></div>
+        </div>
+      </div>
+
+      <!-- ABA 4: SOBRE, MARCAS & PROCESSO -->
+      <div id="panel-sobre" class="studio-panel" hidden>
+        <div class="card">
+          <div class="card-head">
+            <div>
+              <h2>Sobre mim</h2>
+              <p>Nos parágrafos, use <code>**texto**</code> para deixar palavras em negrito.</p>
+            </div>
+            <button type="button" class="btn btn-ghost btn-sm" id="btnAddParagraph">+ Adicionar parágrafo</button>
+          </div>
+          <div class="grid-2">
+            <div class="field"><label for="cAboutKicker">Kicker</label><input type="text" id="cAboutKicker"></div>
+            <div class="field"><label for="cAboutTitle">Título</label><input type="text" id="cAboutTitle"></div>
+          </div>
+          <div id="aboutParagraphsContainer"></div>
+          <h3 style="font-size:20px;margin:18px 0 12px;">Pilares laterais</h3>
+          <div class="grid-3" id="aboutPillarsContainer"></div>
+        </div>
+
+        <div class="card">
+          <div class="card-head"><div><h2>Marcas & Como funciona</h2></div></div>
+          <div class="field"><label for="cBrandsLabel">Rótulo da seção de marcas</label><input type="text" id="cBrandsLabel"></div>
+          <div class="grid-3">
+            <div class="field"><label for="cBrandSub0">Subtítulo marca 1 (Renner)</label><input type="text" id="cBrandSub0"></div>
+            <div class="field"><label for="cBrandSub1">Subtítulo marca 2 (Youcom)</label><input type="text" id="cBrandSub1"></div>
+            <div class="field"><label for="cBrandSub2">Subtítulo marca 3 (99)</label><input type="text" id="cBrandSub2"></div>
+          </div>
+          <div class="grid-2" style="margin-top:16px;padding-top:16px;border-top:1px solid var(--border);">
+            <div class="field"><label for="cProcTitle">Título "Como funciona"</label><input type="text" id="cProcTitle"></div>
+            <div class="field"><label for="cProcSubtitle">Subtítulo "Como funciona"</label><input type="text" id="cProcSubtitle"></div>
+          </div>
+          <div class="grid-3" id="processStepsContainer"></div>
+        </div>
+      </div>
+
+      <!-- ABA 5: CONTATO & RODAPÉ -->
+      <div id="panel-contato" class="studio-panel" hidden>
+        <div class="card">
+          <div class="card-head"><div><h2>Bloco Diagnóstico Gratuito</h2></div></div>
+          <div class="field"><label for="cDiagTitle">Título do bloco</label><input type="text" id="cDiagTitle"></div>
+          <div class="field"><label for="cDiagText">Texto explicativo</label><textarea id="cDiagText" rows="2"></textarea></div>
+          <div class="grid-3">
+            <div class="field"><label for="cDiagBtnText">Texto do botão</label><input type="text" id="cDiagBtnText"></div>
+            <div class="field"><label for="cDiagNote">Legenda abaixo do botão</label><input type="text" id="cDiagNote"></div>
+            <div class="field"><label for="cDiagMsg">Mensagem automática WhatsApp</label><input type="text" id="cDiagMsg"></div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-head">
+            <div><h2>Canais de Contato & Rodapé</h2></div>
+            <div id="resetConfirmWrap" style="display:flex;gap:8px;align-items:center;">
+              <button type="button" class="btn btn-ghost btn-sm" id="btnAskReset">Restaurar textos padrão</button>
+              <button type="button" class="btn btn-danger btn-sm" id="btnConfirmReset" hidden>Confirmar restauração</button>
+              <button type="button" class="btn btn-ghost btn-sm" id="btnCancelReset" hidden>Cancelar</button>
+            </div>
+          </div>
+          <div class="grid-2">
+            <div class="field"><label for="cWhatsapp">Número WhatsApp (somente dígitos, com 55)</label><input type="text" id="cWhatsapp"></div>
+            <div class="field"><label for="cWhatsappDisplay">WhatsApp exibido no site</label><input type="text" id="cWhatsappDisplay"></div>
+          </div>
+          <div class="grid-3">
+            <div class="field"><label for="cEmail">E-mail de contato</label><input type="email" id="cEmail"></div>
+            <div class="field"><label for="cLinkedinName">Nome exibido no LinkedIn</label><input type="text" id="cLinkedinName"></div>
+            <div class="field"><label for="cLinkedinUrl">URL do LinkedIn</label><input type="url" id="cLinkedinUrl"></div>
+          </div>
+          <div class="grid-2">
+            <div class="field"><label for="cFooterLeft">Texto esquerdo do rodapé</label><input type="text" id="cFooterLeft"></div>
+            <div class="field"><label for="cFooterRight">Texto direito do rodapé</label><input type="text" id="cFooterRight"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- BARRA FIXA DE SALVAMENTO DA ESCRITA -->
+      <div class="save-bar" id="contentSaveBar" hidden>
+        <div style="font-size:13px;color:var(--muted);">
+          Alterações de escrita são aplicadas instantaneamente em todos os dispositivos ao salvar.
+        </div>
+        <button type="button" class="btn btn-primary" id="btnSaveContent">Salvar toda a escrita na nuvem</button>
+      </div>
+    </section>
+  </main>
+
+  <dialog class="preview" id="previewModal" aria-labelledby="previewTitle">
+    <div class="preview-head">
+      <h3 id="previewTitle">Prévia</h3>
+      <button type="button" class="btn btn-ghost btn-sm js-dev" data-dev="desktop">Computador</button>
+      <button type="button" class="btn btn-ghost btn-sm js-dev" data-dev="mobile">Celular</button>
+      <button type="button" class="btn btn-ghost btn-sm" id="previewClose">Fechar ×</button>
+    </div>
+    <div class="preview-body" id="previewBody"></div>
+  </dialog>
+
+  <script type="module">
+    import {
+      signInWithPopup,
+      signOut,
+      onAuthStateChanged
+    } from 'https://www.gstatic.com/firebasejs/11.6.0/firebase-auth.js';
+    import {
+      collection,
+      doc,
+      getDoc,
+      getDocs,
+      setDoc,
+      updateDoc,
+      writeBatch,
+      query,
+      orderBy,
+      limit,
+      onSnapshot,
+      serverTimestamp
+    } from 'https://www.gstatic.com/firebasejs/11.6.0/firebase-firestore.js';
+    import {
+      ADMIN_EMAIL,
+      DEFAULT_SITE_CONTENT,
+      OperationType,
+      initPortfolioFirebase,
+      sanitizeSiteContent,
+      sanitizeProjectFields,
+      splitHtmlChunks,
+      compressCoverImage
+    } from '/portfolio-shared.js';
+
+    const { db, auth, googleProvider, handleFirestoreError } = await initPortfolioFirebase();
+
+    const authGate = document.getElementById('authGate');
+    const gateDesc = document.getElementById('gateDesc');
+    const gateNotice = document.getElementById('gateNotice');
+    const btnGoogleLogin = document.getElementById('btnGoogleLogin');
+    const btnSignOut = document.getElementById('btnSignOut');
+    const studioApp = document.getElementById('studioApp');
+    const studioNotice = document.getElementById('studioNotice');
+    const contentSaveBar = document.getElementById('contentSaveBar');
+
+    let currentUser = null;
+    let projectsList = [];
+    let editingProjId = null;
+    let draggedId = null;
+    let pendingDeleteId = null;
+    let siteContentExistsInCloud = false;
+    let currentSiteContent = sanitizeSiteContent(DEFAULT_SITE_CONTENT);
+    let embeddedSeedList = [];
+    let unsubProjects = null;
+    let unsubContent = null;
+    let seedTried = false;
+    let signInPending = false;
+    const htmlCache = new Map();
+
+    function isAdminUser(user) {
+      return Boolean(user && user.emailVerified && user.email === ADMIN_EMAIL);
+    }
+
+    function showNotice(msg, kind = 'info') {
+      studioNotice.textContent = msg;
+      studioNotice.className = 'notice' + (kind === 'error' ? ' is-error' : kind === 'ok' ? ' is-ok' : '');
+      studioNotice.hidden = false;
+    }
+
+    function showGateNotice(msg) {
+      gateNotice.textContent = msg;
+      gateNotice.hidden = false;
+    }
+
+    // Tabs switching
+    const stabs = document.querySelectorAll('.stab');
+    const spanels = document.querySelectorAll('.studio-panel');
+    stabs.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const target = btn.dataset.tab;
+        stabs.forEach(b => b.setAttribute('aria-selected', String(b === btn)));
+        spanels.forEach(p => { p.hidden = p.id !== 'panel-' + target; });
+        contentSaveBar.hidden = target === 'projetos';
+      });
+    });
+
+    // Google Sign-In with re-entrancy guard
+    btnGoogleLogin.addEventListener('click', async () => {
+      if (signInPending) return;
+      signInPending = true;
+      btnGoogleLogin.disabled = true;
+      btnGoogleLogin.textContent = 'Abrindo Google...';
+      gateNotice.hidden = true;
+      try {
+        await signInWithPopup(auth, googleProvider);
+      } catch (err) {
+        const code = err?.code || '';
+        if (code === 'auth/cancelled-popup-request') {
+          showGateNotice('Solicitação interrompida. Clique uma única vez ou abra /admin em uma nova aba.');
+        } else if (code === 'auth/popup-closed-by-user') {
+          showGateNotice('A janela do Google foi fechada antes de concluir o login.');
+        } else if (code === 'auth/popup-blocked') {
+          showGateNotice('Pop-up bloqueado pelo navegador. Permita pop-ups ou abra /admin em nova aba.');
+        } else {
+          showGateNotice('Erro ao conectar: ' + (err?.message || err));
+        }
+      } finally {
+        signInPending = false;
+        btnGoogleLogin.disabled = false;
+        btnGoogleLogin.textContent = 'Conectar com Google';
+      }
+    });
+
+    btnSignOut.addEventListener('click', async () => {
+      try { await signOut(auth); } catch (e) {}
+    });
+
+    // Fetch embedded projects from index.html if cloud projects is empty
+    async function loadEmbeddedFallbackFromIndex() {
+      if (embeddedSeedList.length) return embeddedSeedList;
+      try {
+        const res = await fetch('/', { cache: 'no-store' });
+        if (!res.ok) return [];
+        const html = await res.text();
+        const m = html.match(/<script[^>]*id=["']embeddedProjectsData["'][^>]*>([\s\S]*?)<\/script>/i);
+        if (m && m[1]) {
+          embeddedSeedList = JSON.parse(m[1].trim());
+          return embeddedSeedList;
+        }
+      } catch (e) {}
+      return [];
+    }
+
+    async function commitChunkOpsInSafeBatches(ops, initialBatch) {
+      const MAX_OPS_PER_BATCH = 10;
+      let batch = initialBatch || writeBatch(db);
+      let count = initialBatch ? 1 : 0;
+      for (const fn of ops) {
+        fn(batch);
+        count++;
+        if (count >= MAX_OPS_PER_BATCH) {
+          await batch.commit();
+          batch = writeBatch(db);
+          count = 0;
+        }
+      }
+      if (count > 0) await batch.commit();
+    }
+
+    async function writeProjectToFirestore(item, orderIndex, opts = {}) {
+      const clean = sanitizeProjectFields(item, orderIndex);
+      const keepExistingHtml = Boolean(opts.keepExistingHtml);
+      let isCreate = Boolean(opts.isCreate);
+      const projPath = 'projects/' + clean.id;
+      const projRef = doc(db, 'projects', clean.id);
+
+      try {
+        if (!isCreate) {
+          const snap = await getDoc(projRef);
+          if (!snap.exists()) isCreate = true;
+        }
+
+        if (isCreate) {
+          const sourceHtml = (item.html && item.html.length > 0) ? item.html : ' ';
+          const chunks = splitHtmlChunks(sourceHtml);
+          const firstBatch = writeBatch(db);
+          firstBatch.set(projRef, {
+            ...clean,
+            chunkCount: chunks.length,
+            ownerId: currentUser.uid,
+            createdAt: serverTimestamp(),
+            updatedAt: serverTimestamp()
+          });
+          const ops = chunks.map((chunkStr, idx) => (batch) => {
+            const chunkRef = doc(db, 'projects', clean.id, 'chunks', String(idx));
+            batch.set(chunkRef, {
+              index: idx,
+              data: chunkStr,
+              ownerId: currentUser.uid,
+              createdAt: serverTimestamp(),
+              updatedAt: serverTimestamp()
+            });
+          });
+          await commitChunkOpsInSafeBatches(ops, firstBatch);
+          htmlCache.set(clean.id, String(sourceHtml));
+          return;
+        }
+
+        if (keepExistingHtml) {
+          await updateDoc(projRef, {
+            title: clean.title,
+            cat: clean.cat,
+            tag: clean.tag,
+            desc: clean.desc,
+            cover: clean.cover,
+            order: clean.order,
+            updatedAt: serverTimestamp()
+          });
+          return;
+        }
+
+        const existingChunksSnap = await getDocs(query(collection(db, 'projects', clean.id, 'chunks'), limit(50)));
+        const existingChunkIds = new Set(existingChunksSnap.docs.map(d => d.id));
+        const chunks = splitHtmlChunks(item.html);
+        const firstBatch = writeBatch(db);
+        firstBatch.update(projRef, {
+          title: clean.title,
+          cat: clean.cat,
+          tag: clean.tag,
+          desc: clean.desc,
+          cover: clean.cover,
+          order: clean.order,
+          chunkCount: chunks.length,
+          updatedAt: serverTimestamp()
+        });
+        const ops = [];
+        chunks.forEach((chunkStr, idx) => {
+          const chunkId = String(idx);
+          const chunkRef = doc(db, 'projects', clean.id, 'chunks', chunkId);
+          if (existingChunkIds.has(chunkId)) {
+            ops.push((batch) => batch.update(chunkRef, {
+              index: idx,
+              data: chunkStr,
+              updatedAt: serverTimestamp()
+            }));
+          } else {
+            ops.push((batch) => batch.set(chunkRef, {
+              index: idx,
+              data: chunkStr,
+              ownerId: currentUser.uid,
+              createdAt: serverTimestamp(),
+              updatedAt: serverTimestamp()
+            }));
+          }
+        });
+        existingChunksSnap.docs.forEach(d => {
+          const idxNum = Number(d.id);
+          if (!Number.isInteger(idxNum) || idxNum >= chunks.length) {
+            ops.push((batch) => batch.delete(d.ref));
+          }
+        });
+        await commitChunkOpsInSafeBatches(ops, firstBatch);
+        htmlCache.set(clean.id, String(item.html || ''));
+      } catch (error) {
+        handleFirestoreError(error, isCreate ? OperationType.CREATE : OperationType.UPDATE, projPath);
+      }
+    }
+
+    async function seedCloudIfEmpty() {
+      if (seedTried || !isAdminUser(currentUser)) return;
+      seedTried = true;
+      try {
+        const snap = await getDocs(query(collection(db, 'projects'), orderBy('order', 'asc'), limit(100)));
+        if (snap.empty) {
+          const initial = await loadEmbeddedFallbackFromIndex();
+          for (let i = 0; i < initial.length; i++) {
+            showNotice('Sincronizando projetos iniciais na nuvem (' + (i + 1) + '/' + initial.length + ')...', 'info');
+            await writeProjectToFirestore(initial[i], i, { isCreate: true });
+          }
+          if (initial.length) {
+            showNotice('Todos os ' + initial.length + ' projetos iniciais estão sincronizados na nuvem.', 'ok');
+          }
+        }
+      } catch (err) {
+        seedTried = false;
+        showNotice('Erro ao sincronizar projetos iniciais: ' + (err?.message || err), 'error');
+      }
+    }
+
+    // ---------- PROJECT CRUD UI ----------
+    const projForm = document.getElementById('projForm');
+    const projFormHeading = document.getElementById('projFormHeading');
+    const btnCancelProjEdit = document.getElementById('btnCancelProjEdit');
+    const btnSaveProject = document.getElementById('btnSaveProject');
+    const pTitle = document.getElementById('pTitle');
+    const pCat = document.getElementById('pCat');
+    const pTag = document.getElementById('pTag');
+    const pHtmlFile = document.getElementById('pHtmlFile');
+    const pHtmlLabel = document.getElementById('pHtmlLabel');
+    const pCoverFile = document.getElementById('pCoverFile');
+    const pDesc = document.getElementById('pDesc');
+    const coverPreviewBox = document.getElementById('coverPreviewBox');
+    const coverPreviewImg = document.getElementById('coverPreviewImg');
+    const coverPreviewLabel = document.getElementById('coverPreviewLabel');
+    const pRemoveCover = document.getElementById('pRemoveCover');
+    const projListEl = document.getElementById('projList');
+    const projListCount = document.getElementById('projListCount');
+    const tabProjCount = document.getElementById('tabProjCount');
+
+    const previewModal = document.getElementById('previewModal');
+    const previewBody = document.getElementById('previewBody');
+    const previewTitle = document.getElementById('previewTitle');
+
+    function readFileAsText(file) {
+      return new Promise((res, rej) => {
+        const r = new FileReader();
+        r.onload = () => res(r.result);
+        r.onerror = () => rej(r.error);
+        r.readAsText(file, 'UTF-8');
+      });
+    }
+
+    pCoverFile.addEventListener('change', async () => {
+      const file = pCoverFile.files[0];
+      if (!file) return;
+      const compressed = await compressCoverImage(file);
+      if (compressed) {
+        coverPreviewImg.src = compressed;
+        coverPreviewLabel.textContent = 'Nova foto de capa pronta para salvar';
+        coverPreviewBox.hidden = false;
+        pRemoveCover.checked = false;
+      } else {
+        pCoverFile.value = '';
+        showNotice('Não foi possível processar esta imagem de capa. Tente uma imagem JPG, PNG ou WebP menor.', 'error');
+      }
+    });
+
+    function startEditProject(proj) {
+      editingProjId = proj.id;
+      projFormHeading.textContent = 'Editar projeto';
+      pTitle.value = proj.title;
+      pCat.value = proj.cat;
+      pTag.value = proj.tag;
+      pDesc.value = proj.desc;
+      pHtmlFile.value = '';
+      pHtmlFile.required = false;
+      pHtmlLabel.textContent = 'Substituir arquivo .HTML (opcional)';
+      pCoverFile.value = '';
+      pRemoveCover.checked = false;
+      if (proj.cover) {
+        coverPreviewImg.src = proj.cover;
+        coverPreviewLabel.textContent = 'Capa atual salva na nuvem';
+        coverPreviewBox.hidden = false;
+      } else {
+        coverPreviewBox.hidden = true;
+      }
+      btnSaveProject.textContent = 'Salvar alterações do projeto';
+      btnCancelProjEdit.hidden = false;
+      renderProjList();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function resetProjForm() {
+      editingProjId = null;
+      projForm.reset();
+      projFormHeading.textContent = 'Adicionar novo projeto';
+      pHtmlFile.required = true;
+      pHtmlLabel.textContent = 'Arquivo .HTML do site *';
+      pRemoveCover.checked = false;
+      coverPreviewBox.hidden = true;
+      btnSaveProject.textContent = 'Publicar projeto na nuvem';
+      btnCancelProjEdit.hidden = true;
+      renderProjList();
+    }
+    btnCancelProjEdit.addEventListener('click', resetProjForm);
+
+    async function fetchProjectHtml(projId) {
+      if (htmlCache.has(projId)) return htmlCache.get(projId);
+      const q = query(collection(db, 'projects', projId, 'chunks'), orderBy('index', 'asc'), limit(50));
+      const snap = await getDocs(q);
+      const full = snap.docs.map(d => d.data().data || '').join('');
+      htmlCache.set(projId, full);
+      return full;
+    }
+
+    async function openProjectPreview(proj) {
+      previewTitle.textContent = proj.title;
+      previewBody.classList.remove('is-mobile');
+      previewBody.innerHTML = '<div style="display:grid;place-items:center;color:var(--muted);">Carregando prévia...</div>';
+      previewModal.showModal();
+      try {
+        const html = await fetchProjectHtml(proj.id);
+        const f = document.createElement('iframe');
+        f.setAttribute('sandbox', 'allow-scripts allow-forms allow-popups');
+        f.title = proj.title;
+        f.srcdoc = html;
+        previewBody.innerHTML = '';
+        previewBody.appendChild(f);
+      } catch (e) {
+        previewBody.innerHTML = '<div style="display:grid;place-items:center;color:var(--muted);">Falha ao carregar prévia.</div>';
+      }
+    }
+
+    previewModal.querySelectorAll('.js-dev').forEach(b => {
+      b.addEventListener('click', () => previewBody.classList.toggle('is-mobile', b.dataset.dev === 'mobile'));
+    });
+    document.getElementById('previewClose').addEventListener('click', () => { previewBody.innerHTML = ''; previewModal.close(); });
+
+    async function persistOrder(list) {
+      try {
+        const batch = writeBatch(db);
+        list.forEach((p, idx) => {
+          batch.update(doc(db, 'projects', p.id), { order: idx, updatedAt: serverTimestamp() });
+        });
+        await batch.commit();
+        showNotice('Nova ordem salva na nuvem para todos os dispositivos.', 'ok');
+      } catch (err) {
+        showNotice('Erro ao reordenar: ' + (err?.message || err), 'error');
+      }
+    }
+
+    function moveProject(index, dir) {
+      const target = index + dir;
+      if (target < 0 || target >= projectsList.length) return;
+      const copy = projectsList.slice();
+      const [moved] = copy.splice(index, 1);
+      copy.splice(target, 0, moved);
+      projectsList = copy;
+      renderProjList();
+      persistOrder(copy);
+    }
+
+    function reorderById(sourceId, targetId) {
+      if (!sourceId || !targetId || sourceId === targetId) return;
+      const fromIdx = projectsList.findIndex(p => p.id === sourceId);
+      const toIdx = projectsList.findIndex(p => p.id === targetId);
+      if (fromIdx === -1 || toIdx === -1) return;
+      const copy = projectsList.slice();
+      const [moved] = copy.splice(fromIdx, 1);
+      copy.splice(toIdx, 0, moved);
+      projectsList = copy;
+      renderProjList();
+      persistOrder(copy);
+    }
+
+    async function deleteProject(id) {
+      try {
+        const chunksSnap = await getDocs(query(collection(db, 'projects', id, 'chunks'), limit(50)));
+        const ops = chunksSnap.docs.map(d => (batch) => batch.delete(d.ref));
+        ops.push((batch) => batch.delete(doc(db, 'projects', id)));
+        await commitChunkOpsInSafeBatches(ops);
+        htmlCache.delete(id);
+        pendingDeleteId = null;
+        if (editingProjId === id) resetProjForm();
+        showNotice('Projeto excluído em todos os dispositivos.', 'ok');
+      } catch (error) {
+        showNotice('Erro ao excluir: ' + (error?.message || error), 'error');
+        handleFirestoreError(error, OperationType.DELETE, 'projects/' + id);
+      }
+    }
+
+    function renderProjList() {
+      projListCount.textContent = projectsList.length;
+      tabProjCount.textContent = projectsList.length;
+      if (!projectsList.length) {
+        projListEl.innerHTML = '<div style="color:var(--muted);font-size:13.5px;">Nenhum projeto publicado ainda. Use o formulário ao lado para adicionar.</div>';
+        return;
+      }
+      projListEl.innerHTML = '';
+      projectsList.forEach((proj, idx) => {
+        const row = document.createElement('div');
+        row.className = 'proj-row' + (editingProjId === proj.id ? ' is-editing' : '');
+        row.draggable = true;
+
+        const left = document.createElement('div');
+        left.className = 'proj-left';
+        left.innerHTML = '<span class="drag-handle" title="Arrastar"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><circle cx="9" cy="6" r="1.8"/><circle cx="15" cy="6" r="1.8"/><circle cx="9" cy="12" r="1.8"/><circle cx="15" cy="12" r="1.8"/><circle cx="9" cy="18" r="1.8"/><circle cx="15" cy="18" r="1.8"/></svg></span>';
+
+        const mini = document.createElement('div');
+        mini.className = 'proj-mini';
+        if (proj.cover) {
+          const img = document.createElement('img');
+          img.src = proj.cover;
+          img.alt = proj.title;
+          mini.appendChild(img);
+        } else {
+          mini.textContent = 'Ao vivo';
+        }
+        left.appendChild(mini);
+
+        const info = document.createElement('div');
+        info.className = 'proj-info';
+        const b = document.createElement('b');
+        b.textContent = proj.title;
+        const s = document.createElement('span');
+        s.textContent = proj.tag + ' · ' + (proj.cover ? 'Com capa' : 'Miniatura do HTML');
+        info.append(b, s);
+        left.appendChild(info);
+
+        const actions = document.createElement('div');
+        actions.className = 'proj-actions';
+
+        const btnUp = document.createElement('button');
+        btnUp.type = 'button';
+        btnUp.className = 'btn-icon';
+        btnUp.title = 'Subir';
+        btnUp.disabled = idx === 0;
+        btnUp.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="m18 15-6-6-6 6"/></svg>';
+        btnUp.addEventListener('click', () => moveProject(idx, -1));
+
+        const btnDown = document.createElement('button');
+        btnDown.type = 'button';
+        btnDown.className = 'btn-icon';
+        btnDown.title = 'Descer';
+        btnDown.disabled = idx === projectsList.length - 1;
+        btnDown.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="m6 9 6 6 6-6"/></svg>';
+        btnDown.addEventListener('click', () => moveProject(idx, 1));
+
+        const btnView = document.createElement('button');
+        btnView.type = 'button';
+        btnView.className = 'btn btn-ghost btn-sm';
+        btnView.textContent = 'Prévia';
+        btnView.addEventListener('click', () => openProjectPreview(proj));
+
+        const btnEdit = document.createElement('button');
+        btnEdit.type = 'button';
+        btnEdit.className = 'btn btn-ghost btn-sm';
+        btnEdit.textContent = 'Editar';
+        btnEdit.addEventListener('click', () => startEditProject(proj));
+
+        actions.append(btnUp, btnDown, btnView, btnEdit);
+
+        if (pendingDeleteId === proj.id) {
+          const btnConfirmDel = document.createElement('button');
+          btnConfirmDel.type = 'button';
+          btnConfirmDel.className = 'btn btn-danger btn-sm';
+          btnConfirmDel.textContent = 'Confirmar';
+          btnConfirmDel.addEventListener('click', () => deleteProject(proj.id));
+
+          const btnCancelDel = document.createElement('button');
+          btnCancelDel.type = 'button';
+          btnCancelDel.className = 'btn btn-ghost btn-sm';
+          btnCancelDel.textContent = 'Não';
+          btnCancelDel.addEventListener('click', () => { pendingDeleteId = null; renderProjList(); });
+          actions.append(btnConfirmDel, btnCancelDel);
+        } else {
+          const btnDel = document.createElement('button');
+          btnDel.type = 'button';
+          btnDel.className = 'btn btn-danger btn-sm';
+          btnDel.textContent = 'Excluir';
+          btnDel.addEventListener('click', () => { pendingDeleteId = proj.id; renderProjList(); });
+          actions.appendChild(btnDel);
+        }
+
+        row.append(left, actions);
+
+        row.addEventListener('dragstart', e => {
+          draggedId = proj.id;
+          row.classList.add('is-dragging');
+          e.dataTransfer.effectAllowed = 'move';
+          e.dataTransfer.setData('text/plain', proj.id);
+        });
+        row.addEventListener('dragend', () => {
+          draggedId = null;
+          row.classList.remove('is-dragging');
+          projListEl.querySelectorAll('.drag-over').forEach(el => el.classList.remove('drag-over'));
+        });
+        row.addEventListener('dragover', e => {
+          e.preventDefault();
+          if (draggedId && draggedId !== proj.id) row.classList.add('drag-over');
+        });
+        row.addEventListener('dragleave', () => row.classList.remove('drag-over'));
+        row.addEventListener('drop', e => {
+          e.preventDefault();
+          row.classList.remove('drag-over');
+          reorderById(draggedId || e.dataTransfer.getData('text/plain'), proj.id);
+        });
+
+        projListEl.appendChild(row);
+      });
+    }
+
+    projForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const htmlFile = pHtmlFile.files[0];
+      const coverFile = pCoverFile.files[0];
+      btnSaveProject.disabled = true;
+      btnSaveProject.textContent = 'Salvando na nuvem...';
+      try {
+        if (editingProjId) {
+          const idx = projectsList.findIndex(p => p.id === editingProjId);
+          const existing = projectsList[idx];
+          if (!existing) { resetProjForm(); return; }
+          const htmlText = htmlFile ? await readFileAsText(htmlFile) : '';
+          let coverData = existing.cover || '';
+          if (coverFile) {
+            coverData = await compressCoverImage(coverFile);
+            if (!coverData) throw new Error('Não foi possível comprimir a imagem de capa para envio.');
+          } else if (pRemoveCover.checked) {
+            coverData = '';
+          }
+
+          await writeProjectToFirestore({
+            id: existing.id,
+            title: pTitle.value.trim(),
+            cat: pCat.value,
+            tag: pTag.value.trim(),
+            desc: pDesc.value.trim(),
+            html: htmlText,
+            cover: coverData
+          }, idx >= 0 ? idx : 0, { keepExistingHtml: !htmlFile });
+          showNotice('Projeto atualizado na nuvem e visível em todos os dispositivos.', 'ok');
+          resetProjForm();
+        } else {
+          if (!htmlFile) return;
+          const htmlText = await readFileAsText(htmlFile);
+          let coverData = '';
+          if (coverFile) {
+            coverData = await compressCoverImage(coverFile);
+            if (!coverData) throw new Error('Não foi possível comprimir a imagem de capa para envio.');
+          }
+          const nextOrder = projectsList.length
+            ? Math.max(...projectsList.map(p => Number.isFinite(Number(p.order)) ? Number(p.order) : 0)) + 1
+            : 0;
+          await writeProjectToFirestore({
+            id: 'proj-' + Date.now(),
+            title: pTitle.value.trim(),
+            cat: pCat.value,
+            tag: pTag.value.trim(),
+            desc: pDesc.value.trim(),
+            html: htmlText,
+            cover: coverData
+          }, nextOrder, { isCreate: true });
+          showNotice('Novo projeto publicado na nuvem para todos os dispositivos.', 'ok');
+          projForm.reset();
+          coverPreviewBox.hidden = true;
+        }
+      } catch (err) {
+        showNotice('Erro ao salvar projeto: ' + (err?.message || err), 'error');
+      } finally {
+        btnSaveProject.disabled = false;
+        btnSaveProject.textContent = editingProjId ? 'Salvar alterações do projeto' : 'Publicar projeto na nuvem';
+      }
+    });
+
+    // ---------- SITE CONTENT EDITOR (ESCRITA) ----------
+    function populateContentForm(c) {
+      currentSiteContent = sanitizeSiteContent(c);
+      const d = currentSiteContent;
+
+      document.getElementById('cBrandName').value = d.brandName;
+      document.getElementById('cPreCadLabel').value = d.preCadastroLabel;
+      document.getElementById('cHeroKicker').value = d.hero.kicker;
+      document.getElementById('cHeroTitle').value = d.hero.title;
+      document.getElementById('cHeroLead').value = d.hero.lead;
+      document.getElementById('cHeroCtaText').value = d.hero.ctaText;
+      document.getElementById('cHeroSecondaryText').value = d.hero.secondaryText;
+      document.getElementById('cHeroCtaMsg').value = d.hero.ctaMsg;
+      document.getElementById('cProof0').value = d.hero.proofs[0] || '';
+      document.getElementById('cProof1').value = d.hero.proofs[1] || '';
+      document.getElementById('cProof2').value = d.hero.proofs[2] || '';
+      document.getElementById('cFlowTitle').value = d.hero.flowTitle;
+
+      const flowC = document.getElementById('flowStepsContainer');
+      flowC.innerHTML = '';
+      d.hero.flowSteps.forEach((st, i) => {
+        const box = document.createElement('div');
+        box.className = 'subcard';
+        box.innerHTML =
+          '<div class="subcard-head">Passo ' + (i + 1) + ' do quadro lateral</div>' +
+          '<div class="field"><label>Título</label><input type="text" data-flow-title="' + i + '"></div>' +
+          '<div class="field"><label>Descrição curta</label><input type="text" data-flow-desc="' + i + '"></div>';
+        box.querySelector('[data-flow-title]').value = st.title;
+        box.querySelector('[data-flow-desc]').value = st.desc;
+        flowC.appendChild(box);
+      });
+
+      document.getElementById('cProjKicker').value = d.projectsSection.kicker;
+      document.getElementById('cProjTitle').value = d.projectsSection.title;
+      document.getElementById('cAutoTitle').value = d.automationsSection.title;
+
+      renderAutomationsEditor();
+
+      document.getElementById('cDiffTitle').value = d.differentialsSection.title;
+      document.getElementById('cDiffSubtitle').value = d.differentialsSection.subtitle;
+      const diffC = document.getElementById('diffItemsContainer');
+      diffC.innerHTML = '';
+      d.differentialsSection.items.forEach((it, i) => {
+        const box = document.createElement('div');
+        box.className = 'subcard';
+        box.innerHTML =
+          '<div class="subcard-head">Diferencial ' + (i + 1) + '</div>' +
+          '<div class="field"><label>Título</label><input type="text" data-diff-title="' + i + '"></div>' +
+          '<div class="field"><label>Descrição</label><textarea rows="2" data-diff-desc="' + i + '"></textarea></div>';
+        box.querySelector('[data-diff-title]').value = it.title;
+        box.querySelector('[data-diff-desc]').value = it.desc;
+        diffC.appendChild(box);
+      });
+
+      document.getElementById('cAboutKicker').value = d.aboutSection.kicker;
+      document.getElementById('cAboutTitle').value = d.aboutSection.title;
+      renderParagraphsEditor();
+
+      const pilC = document.getElementById('aboutPillarsContainer');
+      pilC.innerHTML = '';
+      d.aboutSection.pillars.forEach((pl, i) => {
+        const box = document.createElement('div');
+        box.className = 'subcard';
+        box.innerHTML =
+          '<div class="subcard-head">Pilar ' + (i + 1) + '</div>' +
+          '<div class="field"><label>Título</label><input type="text" data-pil-title="' + i + '"></div>' +
+          '<div class="field"><label>Descrição</label><textarea rows="3" data-pil-desc="' + i + '"></textarea></div>';
+        box.querySelector('[data-pil-title]').value = pl.title;
+        box.querySelector('[data-pil-desc]').value = pl.desc;
+        pilC.appendChild(box);
+      });
+
+      document.getElementById('cBrandsLabel').value = d.brandsSection.label;
+      document.getElementById('cBrandSub0').value = d.brandsSection.subs[0] || '';
+      document.getElementById('cBrandSub1').value = d.brandsSection.subs[1] || '';
+      document.getElementById('cBrandSub2').value = d.brandsSection.subs[2] || '';
+
+      document.getElementById('cProcTitle').value = d.processSection.title;
+      document.getElementById('cProcSubtitle').value = d.processSection.subtitle;
+      const procC = document.getElementById('processStepsContainer');
+      procC.innerHTML = '';
+      d.processSection.steps.forEach((st, i) => {
+        const box = document.createElement('div');
+        box.className = 'subcard';
+        box.innerHTML =
+          '<div class="subcard-head">Etapa ' + (i + 1) + '</div>' +
+          '<div class="field"><label>Título</label><input type="text" data-proc-title="' + i + '"></div>' +
+          '<div class="field"><label>Descrição</label><textarea rows="3" data-proc-desc="' + i + '"></textarea></div>';
+        box.querySelector('[data-proc-title]').value = st.title;
+        box.querySelector('[data-proc-desc]').value = st.desc;
+        procC.appendChild(box);
+      });
+
+      document.getElementById('cDiagTitle').value = d.contactSection.diagTitle;
+      document.getElementById('cDiagText').value = d.contactSection.diagText;
+      document.getElementById('cDiagBtnText').value = d.contactSection.diagButtonText;
+      document.getElementById('cDiagNote').value = d.contactSection.diagNote;
+      document.getElementById('cDiagMsg').value = d.contactSection.diagMsg;
+      document.getElementById('cWhatsapp').value = d.contactSection.whatsapp;
+      document.getElementById('cWhatsappDisplay').value = d.contactSection.whatsappDisplay;
+      document.getElementById('cEmail').value = d.contactSection.email;
+      document.getElementById('cLinkedinName').value = d.contactSection.linkedinName;
+      document.getElementById('cLinkedinUrl').value = d.contactSection.linkedinUrl;
+      document.getElementById('cFooterLeft').value = d.contactSection.footerLeft;
+      document.getElementById('cFooterRight').value = d.contactSection.footerRight;
+    }
+
+    function renderAutomationsEditor() {
+      const container = document.getElementById('autoGroupsContainer');
+      container.innerHTML = '';
+      currentSiteContent.automationsSection.groups.forEach((grp, gi) => {
+        const gCard = document.createElement('div');
+        gCard.className = 'subcard';
+
+        const gHead = document.createElement('div');
+        gHead.className = 'subcard-head';
+        gHead.textContent = 'Aba ' + (gi + 1) + ': ' + grp.label;
+        const btnAddCard = document.createElement('button');
+        btnAddCard.type = 'button';
+        btnAddCard.className = 'btn btn-ghost btn-sm';
+        btnAddCard.textContent = '+ Novo card';
+        btnAddCard.addEventListener('click', () => {
+          collectAutomationsFromDom();
+          if (currentSiteContent.automationsSection.groups[gi].items.length >= 12) return;
+          currentSiteContent.automationsSection.groups[gi].items.push({
+            icon: 'chat',
+            title: 'Nova automação',
+            desc: 'Descrição da automação...',
+            tag: 'Público indicado'
+          });
+          renderAutomationsEditor();
+        });
+        gHead.appendChild(btnAddCard);
+        gCard.appendChild(gHead);
+
+        const lblField = document.createElement('div');
+        lblField.className = 'field';
+        lblField.innerHTML = '<label>Nome da aba</label><input type="text" data-auto-group-label="' + gi + '">';
+        lblField.querySelector('input').value = grp.label;
+        gCard.appendChild(lblField);
+
+        const itemsGrid = document.createElement('div');
+        itemsGrid.className = 'grid-2';
+        grp.items.forEach((it, ii) => {
+          const itemBox = document.createElement('div');
+          itemBox.className = 'card';
+          itemBox.style.marginBottom = '0';
+          itemBox.style.padding = '14px';
+
+          const iHead = document.createElement('div');
+          iHead.className = 'subcard-head';
+          iHead.innerHTML = '<span>Card ' + (ii + 1) + '</span>';
+          if (grp.items.length > 1) {
+            const rmBtn = document.createElement('button');
+            rmBtn.type = 'button';
+            rmBtn.className = 'btn btn-danger btn-sm';
+            rmBtn.textContent = 'Remover';
+            rmBtn.addEventListener('click', () => {
+              collectAutomationsFromDom();
+              currentSiteContent.automationsSection.groups[gi].items.splice(ii, 1);
+              renderAutomationsEditor();
+            });
+            iHead.appendChild(rmBtn);
+          }
+          itemBox.appendChild(iHead);
+
+          const fieldsHtml =
+            '<div class="field"><label>Título</label><input type="text" data-ai-title="' + gi + '-' + ii + '"></div>' +
+            '<div class="field"><label>Descrição</label><textarea rows="2" data-ai-desc="' + gi + '-' + ii + '"></textarea></div>' +
+            '<div class="grid-2">' +
+              '<div class="field"><label>Indicado para</label><input type="text" data-ai-tag="' + gi + '-' + ii + '"></div>' +
+              '<div class="field"><label>Ícone</label><select data-ai-icon="' + gi + '-' + ii + '">' +
+                '<option value="chat">WhatsApp / Chat</option>' +
+                '<option value="calendar">Agenda</option>' +
+                '<option value="star">Avaliação</option>' +
+                '<option value="cart">Vendas / Carrinho</option>' +
+                '<option value="insta">Instagram</option>' +
+                '<option value="search">Busca / B2B</option>' +
+                '<option value="forward">Repasse CRM</option>' +
+                '<option value="invoice">Notas / Fiscal</option>' +
+                '<option value="card">Cobrança</option>' +
+              '</select></div>' +
+            '</div>';
+          const wrap = document.createElement('div');
+          wrap.innerHTML = fieldsHtml;
+          wrap.querySelector('[data-ai-title]').value = it.title;
+          wrap.querySelector('[data-ai-desc]').value = it.desc;
+          wrap.querySelector('[data-ai-tag]').value = it.tag;
+          wrap.querySelector('[data-ai-icon]').value = it.icon || 'chat';
+          itemBox.appendChild(wrap);
+          itemsGrid.appendChild(itemBox);
+        });
+
+        gCard.appendChild(itemsGrid);
+        container.appendChild(gCard);
+      });
+    }
+
+    function collectAutomationsFromDom() {
+      currentSiteContent.automationsSection.groups.forEach((grp, gi) => {
+        const lblEl = document.querySelector('[data-auto-group-label="' + gi + '"]');
+        if (lblEl) grp.label = lblEl.value;
+        grp.items.forEach((it, ii) => {
+          const tEl = document.querySelector('[data-ai-title="' + gi + '-' + ii + '"]');
+          const dEl = document.querySelector('[data-ai-desc="' + gi + '-' + ii + '"]');
+          const gEl = document.querySelector('[data-ai-tag="' + gi + '-' + ii + '"]');
+          const iEl = document.querySelector('[data-ai-icon="' + gi + '-' + ii + '"]');
+          if (tEl) it.title = tEl.value;
+          if (dEl) it.desc = dEl.value;
+          if (gEl) it.tag = gEl.value;
+          if (iEl) it.icon = iEl.value;
+        });
+      });
+    }
+
+    function renderParagraphsEditor() {
+      const container = document.getElementById('aboutParagraphsContainer');
+      container.innerHTML = '';
+      currentSiteContent.aboutSection.paragraphs.forEach((txt, i) => {
+        const box = document.createElement('div');
+        box.className = 'subcard';
+        const head = document.createElement('div');
+        head.className = 'subcard-head';
+        head.innerHTML = '<span>Parágrafo ' + (i + 1) + '</span>';
+        if (currentSiteContent.aboutSection.paragraphs.length > 1) {
+          const rm = document.createElement('button');
+          rm.type = 'button';
+          rm.className = 'btn btn-danger btn-sm';
+          rm.textContent = 'Remover';
+          rm.addEventListener('click', () => {
+            collectParagraphsFromDom();
+            currentSiteContent.aboutSection.paragraphs.splice(i, 1);
+            renderParagraphsEditor();
+          });
+          head.appendChild(rm);
+        }
+        const fld = document.createElement('div');
+        fld.className = 'field';
+        const ta = document.createElement('textarea');
+        ta.rows = 3;
+        ta.dataset.aboutPara = String(i);
+        ta.value = txt;
+        fld.appendChild(ta);
+        box.append(head, fld);
+        container.appendChild(box);
+      });
+    }
+
+    function collectParagraphsFromDom() {
+      currentSiteContent.aboutSection.paragraphs = Array.from(document.querySelectorAll('[data-about-para]')).map(el => el.value);
+    }
+
+    document.getElementById('btnAddParagraph').addEventListener('click', () => {
+      collectParagraphsFromDom();
+      if (currentSiteContent.aboutSection.paragraphs.length >= 8) return;
+      currentSiteContent.aboutSection.paragraphs.push('Novo parágrafo sobre sua experiência...');
+      renderParagraphsEditor();
+    });
+
+    function collectFullContentFromDom() {
+      collectAutomationsFromDom();
+      collectParagraphsFromDom();
+
+      const flowSteps = Array.from(document.querySelectorAll('[data-flow-title]')).map((el, i) => ({
+        title: el.value,
+        desc: document.querySelector('[data-flow-desc="' + i + '"]')?.value || ''
+      }));
+      const diffItems = Array.from(document.querySelectorAll('[data-diff-title]')).map((el, i) => ({
+        title: el.value,
+        desc: document.querySelector('[data-diff-desc="' + i + '"]')?.value || ''
+      }));
+      const pillars = Array.from(document.querySelectorAll('[data-pil-title]')).map((el, i) => ({
+        title: el.value,
+        desc: document.querySelector('[data-pil-desc="' + i + '"]')?.value || ''
+      }));
+      const steps = Array.from(document.querySelectorAll('[data-proc-title]')).map((el, i) => ({
+        title: el.value,
+        desc: document.querySelector('[data-proc-desc="' + i + '"]')?.value || ''
+      }));
+
+      return sanitizeSiteContent({
+        id: 'main',
+        brandName: document.getElementById('cBrandName').value,
+        preCadastroLabel: document.getElementById('cPreCadLabel').value,
+        hero: {
+          kicker: document.getElementById('cHeroKicker').value,
+          title: document.getElementById('cHeroTitle').value,
+          lead: document.getElementById('cHeroLead').value,
+          ctaText: document.getElementById('cHeroCtaText').value,
+          ctaMsg: document.getElementById('cHeroCtaMsg').value,
+          secondaryText: document.getElementById('cHeroSecondaryText').value,
+          proofs: [
+            document.getElementById('cProof0').value,
+            document.getElementById('cProof1').value,
+            document.getElementById('cProof2').value
+          ],
+          flowTitle: document.getElementById('cFlowTitle').value,
+          flowSteps
+        },
+        projectsSection: {
+          kicker: document.getElementById('cProjKicker').value,
+          title: document.getElementById('cProjTitle').value
+        },
+        automationsSection: {
+          ...currentSiteContent.automationsSection,
+          title: document.getElementById('cAutoTitle').value
+        },
+        differentialsSection: {
+          title: document.getElementById('cDiffTitle').value,
+          subtitle: document.getElementById('cDiffSubtitle').value,
+          items: diffItems
+        },
+        aboutSection: {
+          kicker: document.getElementById('cAboutKicker').value,
+          title: document.getElementById('cAboutTitle').value,
+          paragraphs: currentSiteContent.aboutSection.paragraphs,
+          pillars
+        },
+        brandsSection: {
+          label: document.getElementById('cBrandsLabel').value,
+          subs: [
+            document.getElementById('cBrandSub0').value,
+            document.getElementById('cBrandSub1').value,
+            document.getElementById('cBrandSub2').value
+          ]
+        },
+        processSection: {
+          title: document.getElementById('cProcTitle').value,
+          subtitle: document.getElementById('cProcSubtitle').value,
+          steps
+        },
+        contactSection: {
+          diagTitle: document.getElementById('cDiagTitle').value,
+          diagText: document.getElementById('cDiagText').value,
+          diagButtonText: document.getElementById('cDiagBtnText').value,
+          diagMsg: document.getElementById('cDiagMsg').value,
+          diagNote: document.getElementById('cDiagNote').value,
+          whatsapp: document.getElementById('cWhatsapp').value,
+          whatsappDisplay: document.getElementById('cWhatsappDisplay').value,
+          email: document.getElementById('cEmail').value,
+          linkedinUrl: document.getElementById('cLinkedinUrl').value,
+          linkedinName: document.getElementById('cLinkedinName').value,
+          footerLeft: document.getElementById('cFooterLeft').value,
+          footerRight: document.getElementById('cFooterRight').value
+        }
+      });
+    }
+
+    const btnSaveContent = document.getElementById('btnSaveContent');
+    async function saveSiteContentToCloud(contentObj) {
+      const clean = sanitizeSiteContent(contentObj);
+      const ref = doc(db, 'siteContent', 'main');
+      const path = 'siteContent/main';
+      btnSaveContent.disabled = true;
+      btnSaveContent.textContent = 'Salvando na nuvem...';
+      try {
+        const snap = await getDoc(ref);
+        if (!snap.exists()) {
+          await setDoc(ref, {
+            ...clean,
+            ownerId: currentUser.uid,
+            createdAt: serverTimestamp(),
+            updatedAt: serverTimestamp()
+          });
+        } else {
+          const { id: _id, ...updatable } = clean;
+          await updateDoc(ref, {
+            ...updatable,
+            updatedAt: serverTimestamp()
+          });
+        }
+        siteContentExistsInCloud = true;
+        showNotice('Toda a escrita do portfólio foi salva na nuvem e já está ao vivo em todos os dispositivos!', 'ok');
+      } catch (err) {
+        showNotice('Erro ao salvar escrita: ' + (err?.message || err), 'error');
+        handleFirestoreError(err, siteContentExistsInCloud ? OperationType.UPDATE : OperationType.CREATE, path);
+      } finally {
+        btnSaveContent.disabled = false;
+        btnSaveContent.textContent = 'Salvar toda a escrita na nuvem';
+      }
+    }
+
+    btnSaveContent.addEventListener('click', () => {
+      const payload = collectFullContentFromDom();
+      saveSiteContentToCloud(payload);
+    });
+
+    const btnAskReset = document.getElementById('btnAskReset');
+    const btnConfirmReset = document.getElementById('btnConfirmReset');
+    const btnCancelReset = document.getElementById('btnCancelReset');
+    btnAskReset.addEventListener('click', () => {
+      btnAskReset.hidden = true;
+      btnConfirmReset.hidden = false;
+      btnCancelReset.hidden = false;
+    });
+    btnCancelReset.addEventListener('click', () => {
+      btnAskReset.hidden = false;
+      btnConfirmReset.hidden = true;
+      btnCancelReset.hidden = true;
+    });
+    btnConfirmReset.addEventListener('click', () => {
+      btnAskReset.hidden = false;
+      btnConfirmReset.hidden = true;
+      btnCancelReset.hidden = true;
+      populateContentForm(DEFAULT_SITE_CONTENT);
+      saveSiteContentToCloud(DEFAULT_SITE_CONTENT);
+    });
+
+    // ---------- SUBSCRIPTIONS ----------
+    function startStudioSubscriptions() {
+      if (!unsubProjects) {
+        const pq = query(collection(db, 'projects'), orderBy('order', 'asc'), limit(100));
+        unsubProjects = onSnapshot(pq, (snap) => {
+          projectsList = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+          renderProjList();
+        }, (err) => handleFirestoreError(err, OperationType.LIST, 'projects'));
+      }
+      if (!unsubContent) {
+        const cref = doc(db, 'siteContent', 'main');
+        unsubContent = onSnapshot(cref, (snap) => {
+          if (snap.exists()) {
+            siteContentExistsInCloud = true;
+            populateContentForm(snap.data());
+          } else {
+            siteContentExistsInCloud = false;
+            populateContentForm(DEFAULT_SITE_CONTENT);
+          }
+        }, (err) => handleFirestoreError(err, OperationType.GET, 'siteContent/main'));
+      }
+    }
+
+    function stopStudioSubscriptions() {
+      if (unsubProjects) { unsubProjects(); unsubProjects = null; }
+      if (unsubContent) { unsubContent(); unsubContent = null; }
+    }
+
+    onAuthStateChanged(auth, async (user) => {
+      currentUser = user;
+      if (isAdminUser(user)) {
+        authGate.hidden = true;
+        studioApp.hidden = false;
+        btnSignOut.hidden = false;
+        showNotice('Conectada como ' + user.email + ' · Tudo que você salvar aqui permanece em todos os dispositivos.', 'info');
+        startStudioSubscriptions();
+        await seedCloudIfEmpty();
+      } else {
+        stopStudioSubscriptions();
+        studioApp.hidden = true;
+        authGate.hidden = false;
+        btnSignOut.hidden = !user;
+        if (user) {
+          showGateNotice('A conta conectada (' + (user.email || 'desconhecida') + ') não é administradora. Conecte-se com ' + ADMIN_EMAIL + '.');
+        } else {
+          gateNotice.hidden = true;
+        }
+      }
+    });
+  </script>
+</body>
+</html>

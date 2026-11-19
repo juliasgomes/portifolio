@@ -78,6 +78,165 @@ service cloud.firestore {
         && data.updatedAt is timestamp;
     }
 
+    function isValidTitleDescItem(item) {
+      return item is map
+        && item.keys().hasAll(['title', 'desc'])
+        && item.keys().hasOnly(['title', 'desc'])
+        && item.title is string && item.title.size() <= 200
+        && item.desc is string && item.desc.size() <= 800;
+    }
+
+    function isValidHeroSection(h) {
+      return h is map
+        && h.keys().hasAll(['kicker', 'title', 'lead', 'ctaText', 'ctaMsg', 'secondaryText', 'proofs', 'flowTitle', 'flowSteps'])
+        && h.keys().hasOnly(['kicker', 'title', 'lead', 'ctaText', 'ctaMsg', 'secondaryText', 'proofs', 'flowTitle', 'flowSteps'])
+        && h.kicker is string && h.kicker.size() <= 200
+        && h.title is string && h.title.size() >= 1 && h.title.size() <= 400
+        && h.lead is string && h.lead.size() >= 1 && h.lead.size() <= 1200
+        && h.ctaText is string && h.ctaText.size() >= 1 && h.ctaText.size() <= 120
+        && h.ctaMsg is string && h.ctaMsg.size() <= 500
+        && h.secondaryText is string && h.secondaryText.size() <= 120
+        && h.proofs is list && h.proofs.size() <= 6
+        && (h.proofs.size() == 0 || (h.proofs[0] is string && h.proofs[0].size() <= 160))
+        && h.flowTitle is string && h.flowTitle.size() <= 200
+        && h.flowSteps is list && h.flowSteps.size() <= 6
+        && (h.flowSteps.size() == 0 || isValidTitleDescItem(h.flowSteps[0]));
+    }
+
+    function isValidProjectsSection(p) {
+      return p is map
+        && p.keys().hasAll(['kicker', 'title'])
+        && p.keys().hasOnly(['kicker', 'title'])
+        && p.kicker is string && p.kicker.size() <= 160
+        && p.title is string && p.title.size() >= 1 && p.title.size() <= 300;
+    }
+
+    function isValidAutomationGroup(g) {
+      return g is map
+        && g.keys().hasAll(['id', 'label', 'items'])
+        && g.keys().hasOnly(['id', 'label', 'items'])
+        && g.id is string && g.id.size() >= 1 && g.id.size() <= 64
+        && g.label is string && g.label.size() >= 1 && g.label.size() <= 120
+        && g.items is list && g.items.size() <= 12
+        && (g.items.size() == 0 || (
+          g.items[0] is map
+          && g.items[0].keys().hasAll(['icon', 'title', 'desc', 'tag'])
+          && g.items[0].keys().hasOnly(['icon', 'title', 'desc', 'tag'])
+          && g.items[0].icon is string && g.items[0].icon.size() <= 32
+          && g.items[0].title is string && g.items[0].title.size() <= 200
+          && g.items[0].desc is string && g.items[0].desc.size() <= 800
+          && g.items[0].tag is string && g.items[0].tag.size() <= 200
+        ));
+    }
+
+    function isValidAutomationsSection(a) {
+      return a is map
+        && a.keys().hasAll(['title', 'ctaText', 'ctaButtonText', 'ctaMsg', 'groups'])
+        && a.keys().hasOnly(['title', 'ctaText', 'ctaButtonText', 'ctaMsg', 'groups'])
+        && a.title is string && a.title.size() >= 1 && a.title.size() <= 300
+        && a.ctaText is string && a.ctaText.size() <= 500
+        && a.ctaButtonText is string && a.ctaButtonText.size() <= 120
+        && a.ctaMsg is string && a.ctaMsg.size() <= 500
+        && a.groups is list && a.groups.size() <= 6
+        && (a.groups.size() == 0 || isValidAutomationGroup(a.groups[0]));
+    }
+
+    function isValidDifferentialsSection(d) {
+      return d is map
+        && d.keys().hasAll(['title', 'subtitle', 'items'])
+        && d.keys().hasOnly(['title', 'subtitle', 'items'])
+        && d.title is string && d.title.size() >= 1 && d.title.size() <= 300
+        && d.subtitle is string && d.subtitle.size() <= 800
+        && d.items is list && d.items.size() <= 8
+        && (d.items.size() == 0 || isValidTitleDescItem(d.items[0]));
+    }
+
+    function isValidAboutSection(a) {
+      return a is map
+        && a.keys().hasAll(['kicker', 'title', 'paragraphs', 'pillars'])
+        && a.keys().hasOnly(['kicker', 'title', 'paragraphs', 'pillars'])
+        && a.kicker is string && a.kicker.size() <= 160
+        && a.title is string && a.title.size() >= 1 && a.title.size() <= 300
+        && a.paragraphs is list && a.paragraphs.size() <= 8
+        && (a.paragraphs.size() == 0 || (a.paragraphs[0] is string && a.paragraphs[0].size() <= 2000))
+        && a.pillars is list && a.pillars.size() <= 6
+        && (a.pillars.size() == 0 || isValidTitleDescItem(a.pillars[0]));
+    }
+
+    function isValidBrandsSection(b) {
+      return b is map
+        && b.keys().hasAll(['label', 'subs'])
+        && b.keys().hasOnly(['label', 'subs'])
+        && b.label is string && b.label.size() <= 200
+        && b.subs is list && b.subs.size() <= 6
+        && (b.subs.size() == 0 || (b.subs[0] is string && b.subs[0].size() <= 120));
+    }
+
+    function isValidProcessSection(p) {
+      return p is map
+        && p.keys().hasAll(['title', 'subtitle', 'steps'])
+        && p.keys().hasOnly(['title', 'subtitle', 'steps'])
+        && p.title is string && p.title.size() >= 1 && p.title.size() <= 300
+        && p.subtitle is string && p.subtitle.size() <= 600
+        && p.steps is list && p.steps.size() <= 6
+        && (p.steps.size() == 0 || isValidTitleDescItem(p.steps[0]));
+    }
+
+    function isValidContactSection(c) {
+      return c is map
+        && c.keys().hasAll([
+          'diagTitle', 'diagText', 'diagButtonText', 'diagMsg', 'diagNote',
+          'whatsapp', 'whatsappDisplay', 'email', 'linkedinUrl', 'linkedinName',
+          'footerLeft', 'footerRight'
+        ])
+        && c.keys().hasOnly([
+          'diagTitle', 'diagText', 'diagButtonText', 'diagMsg', 'diagNote',
+          'whatsapp', 'whatsappDisplay', 'email', 'linkedinUrl', 'linkedinName',
+          'footerLeft', 'footerRight'
+        ])
+        && c.diagTitle is string && c.diagTitle.size() <= 300
+        && c.diagText is string && c.diagText.size() <= 800
+        && c.diagButtonText is string && c.diagButtonText.size() <= 120
+        && c.diagMsg is string && c.diagMsg.size() <= 500
+        && c.diagNote is string && c.diagNote.size() <= 160
+        && c.whatsapp is string && c.whatsapp.size() <= 32
+        && c.whatsappDisplay is string && c.whatsappDisplay.size() <= 40
+        && c.email is string && c.email.size() <= 200
+        && c.linkedinUrl is string && c.linkedinUrl.size() <= 300
+        && c.linkedinName is string && c.linkedinName.size() <= 120
+        && c.footerLeft is string && c.footerLeft.size() <= 200
+        && c.footerRight is string && c.footerRight.size() <= 200;
+    }
+
+    function isValidSiteContent(data, docId) {
+      return data.keys().hasAll([
+          'id', 'brandName', 'preCadastroLabel', 'hero', 'projectsSection',
+          'automationsSection', 'differentialsSection', 'aboutSection',
+          'brandsSection', 'processSection', 'contactSection',
+          'ownerId', 'createdAt', 'updatedAt'
+        ])
+        && data.keys().hasOnly([
+          'id', 'brandName', 'preCadastroLabel', 'hero', 'projectsSection',
+          'automationsSection', 'differentialsSection', 'aboutSection',
+          'brandsSection', 'processSection', 'contactSection',
+          'ownerId', 'createdAt', 'updatedAt'
+        ])
+        && data.id is string && data.id == docId && docId == 'main'
+        && data.brandName is string && data.brandName.size() >= 1 && data.brandName.size() <= 100
+        && data.preCadastroLabel is string && data.preCadastroLabel.size() >= 1 && data.preCadastroLabel.size() <= 80
+        && isValidHeroSection(data.hero)
+        && isValidProjectsSection(data.projectsSection)
+        && isValidAutomationsSection(data.automationsSection)
+        && isValidDifferentialsSection(data.differentialsSection)
+        && isValidAboutSection(data.aboutSection)
+        && isValidBrandsSection(data.brandsSection)
+        && isValidProcessSection(data.processSection)
+        && isValidContactSection(data.contactSection)
+        && data.ownerId is string && data.ownerId.size() >= 1 && data.ownerId.size() <= 128
+        && data.createdAt is timestamp
+        && data.updatedAt is timestamp;
+    }
+
     match /admins/{adminId} {
       allow get: if isVerifiedUser() && isValidId(adminId) && (request.auth.uid == adminId || isAdmin());
       allow list: if false;
@@ -147,6 +306,32 @@ service cloud.firestore {
           && get(/databases/$(database)/documents/projects/$(projectId)).data.id == projectId;
         allow delete: if isVerifiedUser() && isValidId(projectId) && isValidId(chunkId) && isAdmin();
       }
+    }
+
+    match /siteContent/{docId} {
+      allow get: if isValidId(docId) && docId == 'main';
+      allow list: if false;
+      allow create: if isVerifiedUser()
+        && isValidId(docId)
+        && isValidSiteContent(incoming(), docId)
+        && incoming().ownerId == request.auth.uid
+        && incoming().createdAt == request.time
+        && incoming().updatedAt == request.time
+        && isAdmin();
+      allow update: if isVerifiedUser()
+        && isValidId(docId)
+        && isValidSiteContent(incoming(), docId)
+        && incoming().id == existing().id
+        && incoming().ownerId == existing().ownerId
+        && incoming().createdAt == existing().createdAt
+        && incoming().updatedAt == request.time
+        && incoming().diff(existing()).affectedKeys().hasOnly([
+          'brandName', 'preCadastroLabel', 'hero', 'projectsSection',
+          'automationsSection', 'differentialsSection', 'aboutSection',
+          'brandsSection', 'processSection', 'contactSection', 'updatedAt'
+        ])
+        && isAdmin();
+      allow delete: if isVerifiedUser() && isValidId(docId) && docId == 'main' && isAdmin();
     }
   }
 }

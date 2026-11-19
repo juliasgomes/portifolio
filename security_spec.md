@@ -1,10 +1,10 @@
 # Security Specification & Payload-First TDD
 
 ## 1. Data Invariants
-1. **Admin-Only Writes**: Only verified administrators (`request.auth.token.email_verified == true` and either bootstrapped email `julia.sggomes@gmail.com` or an existing `/admins/{uid}` document) may create, update, or delete `/projects/{projectId}` and `/projects/{projectId}/chunks/{chunkId}`.
-2. **Public Portfolio Readability (No PII)**: `/projects/{projectId}` and `/projects/{projectId}/chunks/{chunkId}` contain zero PII and are readable by portfolio visitors only when valid IDs and schema fields hold. `/admins/{adminId}` contains PII (`email`) and is readable strictly by the owning admin or another verified admin.
-3. **Strict Path & Payload Integrity**: Every document ID matches `^[a-zA-Z0-9_\-]+$` (1–128 chars). Every string and enum field has explicit `.size()` and allowlist checks.
-4. **Master Gate & Atomicity**: Every `/projects/{projectId}/chunks/{chunkId}` write checks `getAfter(/databases/$(database)/documents/projects/$(projectId)).data.ownerId == request.auth.uid` so chunks cannot be orphaned or attached to non-existent projects.
+1. **Admin-Only Writes**: Only verified administrators (`request.auth.token.email_verified == true` and either bootstrapped email `julia.sggomes@gmail.com` or an existing `/admins/{uid}` document) may create, update, or delete `/projects/{projectId}`, `/projects/{projectId}/chunks/{chunkId}`, and `/siteContent/main`.
+2. **Public Portfolio Readability (No PII)**: `/projects/{projectId}`, `/projects/{projectId}/chunks/{chunkId}`, and `/siteContent/{docId}` contain zero private PII and are readable by portfolio visitors only with valid IDs, bounded list limits, and schema checks. `/admins/{adminId}` contains PII (`email`) and is readable strictly by the owning admin or another verified admin.
+3. **Strict Path & Payload Integrity**: Every document ID matches `^[a-zA-Z0-9_\-]+$` (1–128 chars). Every string, map, array, and enum field has explicit `.size()` and allowlist checks.
+4. **Master Gate & Atomicity**: Every `/projects/{projectId}/chunks/{chunkId}` write checks `getAfter(/databases/$(database)/documents/projects/$(projectId)).data.id == projectId` so chunks cannot be orphaned or attached to non-existent projects.
 5. **Immutability & Server Time**: `ownerId` and `createdAt` are immutable after creation; `createdAt == request.time` on create and `updatedAt == request.time` on both create and update.
 
 ## 2. The "Dirty Dozen" Payloads (All Must Return PERMISSION_DENIED)
